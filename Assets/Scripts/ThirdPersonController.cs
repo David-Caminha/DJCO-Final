@@ -6,13 +6,14 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(AudioSource))]
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private float m_ForwardSpeed;   // Speed when walking forwards
-    [SerializeField] private float m_BackwardSpeed;  // Speed when walking backwards
-    [SerializeField] private float m_StrafeSpeed;    // Speed when walking sideways
+    [SerializeField] private PlayerStats m_PlayerStats;
+    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
+    [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
+    [SerializeField] private float m_BackwardSpeed;  // Speed modifier when walking backwards
+    [SerializeField] private float m_StrafeSpeed;    // Speed modifier when walking sideways
     [SerializeField] private float m_JumpSpeed;
     [SerializeField] private float m_StickToGroundForce;
     [SerializeField] private float m_GravityMultiplier;
-    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
     [SerializeField] private float m_StepInterval;
     [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
     [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
@@ -44,6 +45,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Jumping = false;
         m_AudioSource = GetComponent<AudioSource>();
         m_MouseLook.Init(transform, m_Camera.transform);
+        m_PlayerStats.Init();
     }
 
 
@@ -178,7 +180,7 @@ public class ThirdPersonController : MonoBehaviour
         if (m_Input.x > 0 || m_Input.x < 0)
         {
             //strafe
-            speed = m_StrafeSpeed;
+            speed = m_StrafeSpeed * m_PlayerStats.MovementSpeed;
         }
         if (m_Input.y < 0)
         {
