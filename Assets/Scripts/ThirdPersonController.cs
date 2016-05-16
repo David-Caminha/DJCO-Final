@@ -6,18 +6,21 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(AudioSource))]
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private float m_ForwardSpeed;   // Speed when walking forwards
-    [SerializeField] private float m_BackwardSpeed;  // Speed when walking backwards
-    [SerializeField] private float m_StrafeSpeed;    // Speed when walking sideways
+    [SerializeField] private PlayerStats m_PlayerStats;
+    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
+    [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
+    [SerializeField] private float m_BackwardSpeed;  // Speed modifier when walking backwards
+    [SerializeField] private float m_StrafeSpeed;    // Speed modifier when walking sideways
     [SerializeField] private float m_JumpSpeed;
     [SerializeField] private float m_StickToGroundForce;
     [SerializeField] private float m_GravityMultiplier;
-    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
     [SerializeField] private float m_StepInterval;
     [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
     [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
     [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+
+    private Animator m_Animator;
     private Camera m_Camera;
     private bool m_Jump;
     private float m_YRotation;
@@ -34,6 +37,7 @@ public class ThirdPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        m_Animator = GetComponent<Animator>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
         m_StepCycle = 0f;
@@ -41,6 +45,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Jumping = false;
         m_AudioSource = GetComponent<AudioSource>();
         m_MouseLook.Init(transform, m_Camera.transform);
+        m_PlayerStats.Init();
     }
 
 
@@ -49,7 +54,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         RotateView();
         // the jump state needs to read here to make sure it is not missed
-        if (!m_Jump)
+        if (m_CharacterController.isGrounded)
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
         }
@@ -115,6 +120,8 @@ public class ThirdPersonController : MonoBehaviour
         ProgressStepCycle(speed);
 
         m_MouseLook.UpdateCursorLock();
+
+        //UpdateAnimator();
     }
 
 
@@ -173,7 +180,7 @@ public class ThirdPersonController : MonoBehaviour
         if (m_Input.x > 0 || m_Input.x < 0)
         {
             //strafe
-            speed = m_StrafeSpeed;
+            speed = m_StrafeSpeed * m_PlayerStats.MovementSpeed;
         }
         if (m_Input.y < 0)
         {
@@ -198,6 +205,33 @@ public class ThirdPersonController : MonoBehaviour
     private void RotateView()
     {
         m_MouseLook.LookRotation(transform, m_Camera.transform);
+    }
+
+    void UpdateAnimator()
+    {
+        Vector3 localVelocity = transform.InverseTransformDirection(m_CharacterController.velocity);
+
+        // update the animator parameters
+        m_Animator.SetFloat("Forward", localVelocity.z, 0.1f, Time.deltaTime);
+        m_Animator.SetFloat("Turn", 0f, 0.1f, Time.deltaTime);
+        m_Animator.SetBool("Crouch", false);
+        m_Animator.SetBool("OnGround", m_CharacterController.isGrounded);
+        if (!m_CharacterController.isGrounded)
+        {
+            m_Animator.SetFloat("Jump", m_MoveDir.y);
+        }
+
+        // calculate which leg is behind, so as to leave that leg trailing in the jump animation
+        // (This code is reliant on the specific run cycle offset in our animations,
+        // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
+        float runCycle =
+            Mathf.Repeat(
+                m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + 0.2f, 1);
+        float jumpLeg = (runCycle < 0.5f ? 1 : -1) * localVelocity.z;
+        if (m_CharacterController.isGrounded)
+        {
+            m_Animator.SetFloat("JumpLeg", jumpLeg);
+        }
     }
 
     // Used to add force upon collision between character controller and a rigidbody

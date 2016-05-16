@@ -5,6 +5,8 @@ using UnityStandardAssets.CrossPlatformInput;
 [Serializable]
 public class ThirdPersonMouseLook
 {
+    //MISSING SMITE-like camera for up/down look
+
     public float XSensitivity = 2f;
     public float YSensitivity = 2f;
     public float MinimumX = -90F;
@@ -43,7 +45,8 @@ public class ThirdPersonMouseLook
     {
         lockCursor = value;
         if (!lockCursor)
-        {//we force unlock the cursor if the user disable the cursor locking helper
+        {
+            //we force unlock the cursor if the user disable the cursor locking helper
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
