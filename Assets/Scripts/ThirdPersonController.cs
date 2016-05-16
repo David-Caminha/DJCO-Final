@@ -45,7 +45,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Jumping = false;
         m_AudioSource = GetComponent<AudioSource>();
         m_MouseLook.Init(transform, m_Camera.transform);
-        m_PlayerStats.Init();
+        m_PlayerStats = GetComponent<PlayerStats>();
     }
 
 
@@ -185,13 +185,13 @@ public class ThirdPersonController : MonoBehaviour
         if (m_Input.y < 0)
         {
             //backwards
-            speed = m_BackwardSpeed;
+            speed = m_BackwardSpeed * m_PlayerStats.MovementSpeed;
         }
         else if (m_Input.y > 0)
         {
             //forwards
             //handled last as if strafing and moving forward at the same time forwards speed should take precedence
-            speed = m_ForwardSpeed;
+            speed = m_ForwardSpeed * m_PlayerStats.MovementSpeed;
         }
 
         // normalize input if it exceeds 1 in combined length:

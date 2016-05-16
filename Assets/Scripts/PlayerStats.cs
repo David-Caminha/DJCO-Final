@@ -1,19 +1,27 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-[Serializable]
-public class PlayerStats
+public class PlayerStats : NetworkBehaviour
 {
-    // Stats for the character
-    [SerializeField] private int _armor;
-    [SerializeField] private int _health;
-    [SerializeField] private int _energy;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _movementSpeed;
-    [SerializeField] private float _attackSpeed;
+    //ERRORS ir buscar damage
 
-    // Getters and Setters for each of the stats (values can only be set inside this class
+    // Stats for the character
+    [SerializeField] [HideInInspector] private int _armor;
+    [SerializeField] [HideInInspector] private int _health;
+    [SerializeField] [HideInInspector] private int _energy;
+    [SerializeField] [HideInInspector] private int _damage;
+    [SerializeField] [HideInInspector] private int _movementSpeed;
+    [SerializeField] [HideInInspector] private float _attackSpeed;
+
+
+    public ThirdPersonController thirdPersonController;
+    public Camera fpsCamera;
+    public AudioListener audioListener;
+    Renderer[] renderers;
+
+    // Getters and Setters for each of the stats (values can only be set inside this class)
     public int Armor
     {
         get
@@ -88,18 +96,49 @@ public class PlayerStats
 
 
     // Use this for initialization
-    public void Init () {
+    public void Start()
+    {
+        renderers = GetComponentsInChildren<Renderer>();
         Armor = 10;
         Health = 500;
         Energy = 150;
         Damage = 43;
         AttackSpeed = 0.93f;
-        MovementSpeed = 350;
-	
-	}
+        MovementSpeed = 100;
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        thirdPersonController.enabled = true;
+        fpsCamera.enabled = true;
+        audioListener.enabled = true;
+
+        gameObject.name = "LOCAL Player";
+        base.OnStartLocalPlayer();
+    }
+
+    void ToggleRenderer(bool isAlive)
+    {
+        for (int i = 0; i < renderers.Length; i++)
+            renderers[i].enabled = isAlive;
+    }
+
+    void ToggleControls(bool isAlive)
+    {
+        thirdPersonController.enabled = isAlive;
+        fpsCamera.cullingMask = ~fpsCamera.cullingMask;
+    }
+
+    void Respawn()
+    {
+        ToggleRenderer(true);
+
+        if (isLocalPlayer)
+            ToggleControls(true);
+    }
 
     // Methods for changing the stats
-    public void ChangeArmor(int amount)
+    public void RpcChangeArmor(int amount)
     {
         Armor += amount;
     }
@@ -128,4 +167,29 @@ public class PlayerStats
     {
         MovementSpeed += amount;
     }
+
+
+    // Server side methods (server calls these functons on every client)
+    [ClientRpc]
+    public void RpcResolveHit() // Remove hp check death etc...
+    {
+        ChangeHealth(10); //ERROR Ir buscar damage e aplicar
+
+        if(_health <= 0)
+        {
+            ToggleRenderer(false);
+
+            if (isLocalPlayer) // Remove controls and Move player to the spawn point
+            {
+                Transform spawn = NetworkManager.singleton.GetStartPosition();
+                transform.position = spawn.position;
+                transform.rotation = spawn.rotation;
+
+                ToggleControls(false);
+            }
+
+            Invoke("Respawn", 2f);
+        }
+    }
+
 }
