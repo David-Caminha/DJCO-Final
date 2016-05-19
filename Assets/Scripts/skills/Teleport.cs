@@ -25,12 +25,11 @@ public class Teleport : MonoBehaviour
             teamMates = GameObject.FindGameObjectsWithTag("teammate");
             foreach (GameObject teamMate in teamMates)
             {
-                teamMateHealth = teamMate.GetComponent<temp>().health;
+                teamMateHealth = teamMate.GetComponent<PlayerStats>().Health;
                 print("If" + teamMateHealth);
                 if (teamMateHealth != 0 && teamMateHealth < leastHealth)
                 {
-                    
-                    leastHealth = teamMate.GetComponent<temp>().health;
+                    leastHealth = teamMateHealth;
                     playerObjective = teamMate;
                 }
             }

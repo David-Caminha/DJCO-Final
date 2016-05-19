@@ -1,30 +1,40 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class Silence : MonoBehaviour {
+public class Silence : NetworkBehaviour
+{
+    float silenceTime;
 
-	// Use this for initialization
-    private GameObject otherPlayer;
-	void Start () {
-	
-	}
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Explosion(new Vector2(transform.position.x, transform.position.z), 3);
+        }
+    }
+
     void Explosion(Vector2 center, float radius)
     {
+        GameObject otherPlayer;
+        List<GameObject> enemiesHit = new List<GameObject>();
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
         int i = 0;
         while (i < hitColliders.Length)
         {
             otherPlayer = hitColliders[i].gameObject;
             if (otherPlayer.tag == "enemyplayer")
-                otherPlayer.GetComponent<temp>().silence = true;
+            {
+                enemiesHit.Add(otherPlayer);
+            }
         }
+        CmdHitPlayer(enemiesHit);
     }
-    // Update is called once per frame
-    void Update()
+
+    [Command]
+    void CmdHitPlayer(List<GameObject> enemiesHit)
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {     
-            Explosion(new Vector2(transform.position.x, transform.position.z), 3);
-        }
+        foreach (GameObject enemy in enemiesHit)
+            enemy.GetComponent<PlayerStats>().RpcSilencePlayer(silenceTime);
     }
 }

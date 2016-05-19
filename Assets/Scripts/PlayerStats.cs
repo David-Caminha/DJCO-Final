@@ -7,13 +7,16 @@ public class PlayerStats : NetworkBehaviour
 {
     //ERRORS ir buscar damage
 
-    // Stats for the character
+    // Basic stats for the character
     [SerializeField] [HideInInspector] private int _armor;
     [SerializeField] [HideInInspector] private int _health;
     [SerializeField] [HideInInspector] private int _energy;
     [SerializeField] [HideInInspector] private int _damage;
     [SerializeField] [HideInInspector] private int _movementSpeed;
     [SerializeField] [HideInInspector] private float _attackSpeed;
+
+    // Status effects
+    [SerializeField] [HideInInspector] private bool _silenced;
 
 
     public ThirdPersonController thirdPersonController;
@@ -33,7 +36,7 @@ public class PlayerStats : NetworkBehaviour
             _armor = value;
         }
     }
-
+    
     public int Health
     {
         get
@@ -94,17 +97,32 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
+    // Getters and Setters for each of the status effect
+    public bool Silenced
+    {
+        get
+        {
+            return _silenced;
+        }
+        private set
+        {
+            _silenced = value;
+        }
+    }
 
     // Use this for initialization
     public void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
+
         Armor = 10;
         Health = 500;
         Energy = 150;
         Damage = 43;
         AttackSpeed = 0.93f;
         MovementSpeed = 100;
+
+        Silenced = false;
     }
 
     public override void OnStartLocalPlayer()
@@ -129,6 +147,7 @@ public class PlayerStats : NetworkBehaviour
         fpsCamera.cullingMask = ~fpsCamera.cullingMask;
     }
 
+    // Methods to be invoked by other functions
     void Respawn()
     {
         ToggleRenderer(true);
@@ -137,8 +156,13 @@ public class PlayerStats : NetworkBehaviour
             ToggleControls(true);
     }
 
+    void RemoveSilence()
+    {
+        Silenced = false;
+    }
+
     // Methods for changing the stats
-    public void RpcChangeArmor(int amount)
+    public void ChangeArmor(int amount)
     {
         Armor += amount;
     }
@@ -190,6 +214,13 @@ public class PlayerStats : NetworkBehaviour
 
             Invoke("Respawn", 2f);
         }
+    }
+
+    [ClientRpc]
+    public void RpcSilencePlayer(float silenceTime)
+    {
+        Silenced = true;
+        Invoke("RemoveSilence", silenceTime);
     }
 
 }
