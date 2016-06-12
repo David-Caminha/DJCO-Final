@@ -17,7 +17,7 @@ public class Silence : NetworkBehaviour
     void Explosion(Vector2 center, float radius)
     {
         GameObject otherPlayer;
-        List<GameObject> enemiesHit = new List<GameObject>;
+        List<GameObject> enemiesHit = new List<GameObject>();
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(center, radius);
         int i = 0;
         while (i < hitColliders.Length)

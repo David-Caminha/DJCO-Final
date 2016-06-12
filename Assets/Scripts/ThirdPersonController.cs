@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(NetworkTransform))]
+[RequireComponent(typeof(CharacterController))]
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private PlayerStats m_PlayerStats;
+    [SerializeField] [HideInInspector] private PlayerStats m_PlayerStats;
     [SerializeField] private ThirdPersonMouseLook m_MouseLook;
     [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
     [SerializeField] private float m_BackwardSpeed;  // Speed modifier when walking backwards

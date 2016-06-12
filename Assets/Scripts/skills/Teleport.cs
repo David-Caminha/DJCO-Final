@@ -29,7 +29,6 @@ public class Teleport : MonoBehaviour
                 print("If" + teamMateHealth);
                 if (teamMateHealth != 0 && teamMateHealth < leastHealth)
                 {
-                    
                     leastHealth = teamMateHealth;
                     playerObjective = teamMate;
                 }
