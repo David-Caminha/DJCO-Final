@@ -13,7 +13,6 @@ namespace Prototype.NetworkLobby
         public RectTransform team1PlayerListContentTransform;
         public RectTransform team2PlayerListContentTransform;
         public GameObject warningDirectPlayServer;
-        public Transform addButtonRow;
 
         protected VerticalLayoutGroup _team1Layout;
         protected VerticalLayoutGroup _team2Layout;
@@ -56,7 +55,6 @@ namespace Prototype.NetworkLobby
                 player.tag = "Team1";
 
                 player.transform.SetParent(team1PlayerListContentTransform, false);
-                addButtonRow.transform.SetAsLastSibling();
             }
             else
             {
@@ -68,7 +66,6 @@ namespace Prototype.NetworkLobby
                 player.tag = "Team2";
 
                 player.transform.SetParent(team2PlayerListContentTransform, false);
-                addButtonRow.transform.SetAsLastSibling();
             }
 
             PlayerListModified();
