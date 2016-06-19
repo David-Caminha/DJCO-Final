@@ -23,6 +23,10 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
     [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
     [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask whatIsGround;
+    float groundRadius = 1f;
+    bool grounded = false;
 
 
     private bool dyingFromFall;
@@ -38,6 +42,10 @@ public class ThirdPersonController : MonoBehaviour
     private float m_StepCycle;
     private float m_NextStep;
     private bool m_Jumping;
+    private bool m_Attacking;
+    private bool m_Attack;
+    private int m_attackState;
+    private float m_attackTimeOut;
     private AudioSource m_AudioSource;
 
     // Use this for initialization
@@ -54,6 +62,8 @@ public class ThirdPersonController : MonoBehaviour
         m_AudioSource = GetComponent<AudioSource>();
         m_MouseLook.Init(transform, m_Camera.transform);
         m_PlayerStats = GetComponent<PlayerStats>();
+        m_Attacking = false;
+        m_attackTimeOut = 2.5f;
     }
 
 
@@ -65,26 +75,37 @@ public class ThirdPersonController : MonoBehaviour
             m_Camera.transform.LookAt(transform);
             return;
         }
+        
+        if (m_attackTimeOut >= 0)
+            m_attackTimeOut -= Time.deltaTime;
+        else
+        {
+            m_attackState = 0;
+        }
 
         RotateView();
         // the jump state needs to read here to make sure it is not missed
-        if (m_CharacterController.isGrounded)
+        if (grounded)
         {
+            m_Attack = CrossPlatformInputManager.GetButtonDown("Fire1");
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+
+
         }
 
-        if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
+
+        if (!m_PreviouslyGrounded && grounded)
         {
             PlayLandingSound();
             m_MoveDir.y = 0f;
             m_Jumping = false;
         }
-        if (!m_CharacterController.isGrounded && !m_Jumping && m_PreviouslyGrounded)
+        if (!grounded && !m_Jumping && m_PreviouslyGrounded)
         {
             m_MoveDir.y = 0f;
         }
 
-        m_PreviouslyGrounded = m_CharacterController.isGrounded;
+        m_PreviouslyGrounded = grounded;
     }
 
 
@@ -101,6 +122,8 @@ public class ThirdPersonController : MonoBehaviour
         if (dyingFromFall)
             return;
 
+        grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
+
         float speed;
         GetInput(out speed);
         // always move along the camera forward as it is the direction that it being aimed at
@@ -116,16 +139,46 @@ public class ThirdPersonController : MonoBehaviour
         m_MoveDir.z = desiredMove.z * speed;
 
 
-        if (m_CharacterController.isGrounded)
+        if (grounded)
         {
             m_MoveDir.y = -m_StickToGroundForce;
 
             if (m_Jump)
             {
+                Debug.Log("Jump");
                 m_MoveDir.y = m_JumpSpeed;
                 PlayJumpSound();
                 m_Jump = false;
                 m_Jumping = true;
+            }
+            if (m_Attack)
+            {
+                Debug.Log("Attack");
+                m_Attacking = true;
+                m_Attack = false;
+                switch (m_attackState)
+                {
+                    case 0:
+                        m_attackTimeOut = 2.5f;
+                        m_attackState = 1;
+                        break;
+                    case 1:
+                        m_attackTimeOut = 2.5f;
+                        m_attackState = 2;
+                        break;
+                    case 2:
+                        m_attackTimeOut = 2.5f;
+                        int specialAttack = Random.Range(0,1);
+                        if (specialAttack == 0)
+                            m_attackState = 0;
+                        else
+                            m_attackState = 1;
+                        break;
+                    case 3:
+                        m_attackTimeOut = 2.5f;
+                        break;
+                }
+                Invoke("EndAttack", 1.0f);
             }
         }
         else
@@ -141,6 +194,10 @@ public class ThirdPersonController : MonoBehaviour
         UpdateAnimator();
     }
 
+    private void EndAttack()
+    {
+        m_Attacking = false;
+    }
 
     private void PlayJumpSound()
     {
@@ -169,18 +226,18 @@ public class ThirdPersonController : MonoBehaviour
 
     private void PlayFootStepAudio()
     {
-        if (!m_CharacterController.isGrounded)
+        if (!grounded)
         {
             return;
         }
         // pick & play a random footstep sound from the array,
         // excluding sound at index 0
         int n = Random.Range(1, m_FootstepSounds.Length);
-        m_AudioSource.clip = m_FootstepSounds[n];
-        m_AudioSource.PlayOneShot(m_AudioSource.clip);
+        //m_AudioSource.clip = m_FootstepSounds[n];
+        // m_AudioSource.PlayOneShot(m_AudioSource.clip);
         // move picked sound to index 0 so it's not picked next time
-        m_FootstepSounds[n] = m_FootstepSounds[0];
-        m_FootstepSounds[0] = m_AudioSource.clip;
+        // m_FootstepSounds[n] = m_FootstepSounds[0];
+        // m_FootstepSounds[0] = m_AudioSource.clip;
     }
 
 
@@ -226,14 +283,15 @@ public class ThirdPersonController : MonoBehaviour
 
     void UpdateAnimator()
     {
-        Vector3 localVelocity = transform.InverseTransformDirection(m_CharacterController.velocity);
 
         // update the animator parameters
-        m_Animator.SetFloat("Forward", localVelocity.z, 0.1f, Time.deltaTime);
-        m_Animator.SetFloat("Turn", 0f, 0.1f, Time.deltaTime);
+        m_Animator.SetFloat("Forward", m_Input.y, 0.1f, Time.deltaTime);
+        m_Animator.SetFloat("Strafe", m_Input.x, 0.1f, Time.deltaTime);
         m_Animator.SetBool("Crouch", false);
-        m_Animator.SetBool("OnGround", m_CharacterController.isGrounded);
-        if (!m_CharacterController.isGrounded)
+        m_Animator.SetBool("OnGround", grounded);
+        m_Animator.SetBool("Attacking", m_Attacking);
+        m_Animator.SetInteger("AttackState", m_attackState);
+        if (!grounded)
         {
             m_Animator.SetFloat("Jump", m_MoveDir.y);
         }
@@ -244,8 +302,8 @@ public class ThirdPersonController : MonoBehaviour
         float runCycle =
             Mathf.Repeat(
                 m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + 0.2f, 1);
-        float jumpLeg = (runCycle < 0.5f ? 1 : -1) * localVelocity.z;
-        if (m_CharacterController.isGrounded)
+        float jumpLeg = (runCycle < 0.5f ? 1 : -1) * m_Input.y;
+        if (grounded)
         {
             m_Animator.SetFloat("JumpLeg", jumpLeg);
         }

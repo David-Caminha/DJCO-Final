@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: e36cbc7acc2b0f74aab0780c277e73cf
 folderAsset: yes
 timeCreated: 1466344812
+=======
+guid: 9b1dbb24e1ff188438b2c82dda7d9324
+folderAsset: yes
+timeCreated: 1464589134
+>>>>>>> origin/Animations
 licenseType: Free
 DefaultImporter:
   userData: 
