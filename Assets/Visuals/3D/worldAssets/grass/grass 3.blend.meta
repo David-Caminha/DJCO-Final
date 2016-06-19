@@ -1,0 +1,175 @@
+fileFormatVersion: 2
+guid: 6749627be1a90454e8ca913ced4ecf0d
+timeCreated: 1464281555
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Grass_16
+    100004: Grass_17
+    100006: Grass_18
+    100008: Grass_19
+    100010: Grass_20
+    100012: Grass_21
+    100014: Grass_22
+    100016: Grass_23
+    100018: Grass_24
+    100020: Grass_25
+    100022: Grass_26
+    100024: Grass_27
+    100026: Grass_28
+    100028: Grass_29
+    100030: Grass_30
+    100032: Grass_31
+    100034: Grass_32
+    100036: Grass_33
+    100038: Grass_34
+    100040: Grass_35
+    400000: //RootNode
+    400002: Grass_16
+    400004: Grass_17
+    400006: Grass_18
+    400008: Grass_19
+    400010: Grass_20
+    400012: Grass_21
+    400014: Grass_22
+    400016: Grass_23
+    400018: Grass_24
+    400020: Grass_25
+    400022: Grass_26
+    400024: Grass_27
+    400026: Grass_28
+    400028: Grass_29
+    400030: Grass_30
+    400032: Grass_31
+    400034: Grass_32
+    400036: Grass_33
+    400038: Grass_34
+    400040: Grass_35
+    2300000: Grass_16
+    2300002: Grass_17
+    2300004: Grass_18
+    2300006: Grass_19
+    2300008: Grass_20
+    2300010: Grass_21
+    2300012: Grass_22
+    2300014: Grass_23
+    2300016: Grass_24
+    2300018: Grass_25
+    2300020: Grass_26
+    2300022: Grass_27
+    2300024: Grass_28
+    2300026: Grass_29
+    2300028: Grass_30
+    2300030: Grass_31
+    2300032: Grass_32
+    2300034: Grass_33
+    2300036: Grass_34
+    2300038: Grass_35
+    3300000: Grass_16
+    3300002: Grass_17
+    3300004: Grass_18
+    3300006: Grass_19
+    3300008: Grass_20
+    3300010: Grass_21
+    3300012: Grass_22
+    3300014: Grass_23
+    3300016: Grass_24
+    3300018: Grass_25
+    3300020: Grass_26
+    3300022: Grass_27
+    3300024: Grass_28
+    3300026: Grass_29
+    3300028: Grass_30
+    3300030: Grass_31
+    3300032: Grass_32
+    3300034: Grass_33
+    3300036: Grass_34
+    3300038: Grass_35
+    4300000: Grass_21
+    4300002: Grass_25
+    4300004: Grass_24
+    4300006: Grass_23
+    4300008: Grass_22
+    4300010: Grass_26
+    4300012: Grass_30
+    4300014: Grass_29
+    4300016: Grass_28
+    4300018: Grass_27
+    4300020: Grass_31
+    4300022: Grass_35
+    4300024: Grass_34
+    4300026: Grass_33
+    4300028: Grass_32
+    4300030: Grass_16
+    4300032: Grass_20
+    4300034: Grass_19
+    4300036: Grass_18
+    4300038: Grass_17
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
