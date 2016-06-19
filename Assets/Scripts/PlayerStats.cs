@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayerStats : NetworkBehaviour
@@ -16,7 +14,7 @@ public class PlayerStats : NetworkBehaviour
     [SerializeField] [HideInInspector] private float _attackSpeed;
 
     // Status effects
-    [SerializeField] [HideInInspector] private bool _silenced;
+    [SerializeField]  private bool _frozen;
 
 
     public ThirdPersonController thirdPersonController;
@@ -98,15 +96,15 @@ public class PlayerStats : NetworkBehaviour
     }
 
     // Getters and Setters for each of the status effect
-    public bool Silenced
+    public bool Frozen
     {
         get
         {
-            return _silenced;
+            return _frozen;
         }
         private set
         {
-            _silenced = value;
+            _frozen = value;
         }
     }
 
@@ -122,7 +120,7 @@ public class PlayerStats : NetworkBehaviour
         AttackSpeed = 0.93f;
         MovementSpeed = 100;
 
-        Silenced = false;
+        Frozen = false;
     }
 
     public override void OnStartLocalPlayer()
@@ -130,6 +128,7 @@ public class PlayerStats : NetworkBehaviour
         thirdPersonController.enabled = true;
         fpsCamera.gameObject.SetActive(true);
         audioListener.enabled = true;
+        GetComponent<Freeze>().enabled = true;
 
         gameObject.name = "LOCAL Player";
         base.OnStartLocalPlayer();
@@ -144,7 +143,6 @@ public class PlayerStats : NetworkBehaviour
     void ToggleControls(bool isAlive)
     {
         thirdPersonController.enabled = isAlive;
-        fpsCamera.cullingMask = ~fpsCamera.cullingMask;
     }
 
     // Methods to be invoked by other functions
@@ -153,12 +151,16 @@ public class PlayerStats : NetworkBehaviour
         ToggleRenderer(true);
 
         if (isLocalPlayer)
+        {
+            GetComponent<ThirdPersonController>().ResetCamera();
             ToggleControls(true);
+        }
     }
 
-    void RemoveSilence()
+    void RemoveFreeze()
     {
-        Silenced = false;
+        print("Unfreezing");
+        Frozen = false;
     }
 
     // Methods for changing the stats
@@ -216,11 +218,38 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
-    public void RpcSilencePlayer(float silenceTime)
+    [Command]
+    public void CmdPlayerDeath()
     {
-        Silenced = true;
-        Invoke("RemoveSilence", silenceTime);
+        RpcPlayerDeath();
+    }
+
+    [ClientRpc]
+    public void RpcPlayerDeath()
+    {
+        ToggleRenderer(false);
+
+        if (isLocalPlayer) // Remove controls and Move player to the spawn point
+        {
+            //Transform spawn = NetworkManager.singleton.GetStartPosition();
+            transform.position = new Vector3();
+            transform.rotation = Quaternion.identity;
+
+            ToggleControls(false);
+        }
+
+        Invoke("Respawn", 2f);
+    }
+
+    [ClientRpc]
+    public void RpcFreezePlayer(float freezeTime)
+    {
+        if (isLocalPlayer)
+            print("player from " + tag + "was frozen and i'm the local player");
+        else
+            print("player from " + tag + "was frozen");
+        Frozen = true;
+        Invoke("RemoveFreeze", freezeTime);
     }
 
 }

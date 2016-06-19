@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityStandardAssets.CrossPlatformInput;
 using Random = UnityEngine.Random;
@@ -8,6 +9,8 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonController : MonoBehaviour
 {
+    [SerializeField] private Transform cameraRelative2Player;
+    [SerializeField] private Transform cameraOverview;
     [SerializeField] [HideInInspector] private PlayerStats m_PlayerStats;
     [SerializeField] private ThirdPersonMouseLook m_MouseLook;
     [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
@@ -22,6 +25,7 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
 
+    private bool dyingFromFall;
     private Animator m_Animator;
     private Camera m_Camera;
     private bool m_Jump;
@@ -39,6 +43,8 @@ public class ThirdPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        cameraOverview = GameObject.FindGameObjectWithTag("OverviewCamera").transform;
+        dyingFromFall = false;
         m_Animator = GetComponent<Animator>();
         m_CharacterController = GetComponent<CharacterController>();
         m_Camera = Camera.main;
@@ -54,6 +60,12 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(dyingFromFall)
+        {
+            m_Camera.transform.LookAt(transform);
+            return;
+        }
+
         RotateView();
         // the jump state needs to read here to make sure it is not missed
         if (m_CharacterController.isGrounded)
@@ -86,6 +98,9 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (dyingFromFall)
+            return;
+
         float speed;
         GetInput(out speed);
         // always move along the camera forward as it is the direction that it being aimed at
@@ -123,7 +138,7 @@ public class ThirdPersonController : MonoBehaviour
 
         m_MouseLook.UpdateCursorLock();
 
-        //UpdateAnimator();
+        UpdateAnimator();
     }
 
 
@@ -234,6 +249,28 @@ public class ThirdPersonController : MonoBehaviour
         {
             m_Animator.SetFloat("JumpLeg", jumpLeg);
         }
+    }
+
+    public void DieFromFall()
+    {
+        dyingFromFall = true;
+        m_Camera.transform.parent = null;
+        Invoke("FinishFall", 2f);
+    }
+
+    public void FinishFall()
+    {
+        m_Camera.transform.position = cameraOverview.position;
+        m_Camera.transform.rotation = cameraOverview.rotation;
+        dyingFromFall = false;
+        m_PlayerStats.CmdPlayerDeath();
+    }
+
+    public void ResetCamera()
+    {
+        m_Camera.transform.parent = transform;
+        m_Camera.transform.position = cameraRelative2Player.position;
+        m_Camera.transform.rotation = cameraRelative2Player.rotation;
     }
 
     // Used to add force upon collision between character controller and a rigidbody
