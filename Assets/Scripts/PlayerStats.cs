@@ -128,7 +128,7 @@ public class PlayerStats : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         thirdPersonController.enabled = true;
-        fpsCamera.enabled = true;
+        fpsCamera.gameObject.SetActive(true);
         audioListener.enabled = true;
 
         gameObject.name = "LOCAL Player";
