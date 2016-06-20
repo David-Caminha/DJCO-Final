@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: af824d12766052e458fc08cc6bfc1cf9
-timeCreated: 1466356078
+guid: 55b48c0eccd63c847b776d039d1422b2
+timeCreated: 1466385149
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -28,39 +28,39 @@ ModelImporter:
     100040: Head
     100042: Head_end
     100044: Joana
-    100046: Leg_Control.L
-    100048: Leg_Control.R
-    100050: Leg_Down.L
-    100052: Leg_Down.L_end
-    100054: Leg_Down.R
-    100056: Leg_Down.R_end
-    100058: Leg_IK.L
-    100060: Leg_IK.L_end
-    100062: Leg_IK.R
-    100064: Leg_IK.R_end
-    100066: Leg_Poletarget.L
-    100068: Leg_Poletarget.L_end
-    100070: Leg_Poletarget.R
-    100072: Leg_Poletarget.R_end
-    100074: Leg_Up.L
-    100076: Leg_Up.R
-    100078: Neck
-    100080: Root
-    100082: Thumb_Down.L
-    100084: Thumb_Down.L_end
-    100086: Thumb_Down.R
-    100088: Thumb_Down.R_end
-    100090: Thumb_Up.L
-    100092: Thumb_Up.R
-    100094: Toes.L
-    100096: Toes.L_end
-    100098: Toes.R
-    100100: Toes.R_end
-    100102: Toes_Control.L
-    100104: Toes_Control.L_end
-    100106: Toes_Control.R
-    100108: Toes_Control.R_end
-    100110: //RootNode
+    100046: //RootNode
+    100048: Leg_Control.L
+    100050: Leg_Control.R
+    100052: Leg_Down.L
+    100054: Leg_Down.L_end
+    100056: Leg_Down.R
+    100058: Leg_Down.R_end
+    100060: Leg_IK.L
+    100062: Leg_IK.L_end
+    100064: Leg_IK.R
+    100066: Leg_IK.R_end
+    100068: Leg_Poletarget.L
+    100070: Leg_Poletarget.L_end
+    100072: Leg_Poletarget.R
+    100074: Leg_Poletarget.R_end
+    100076: Leg_Up.L
+    100078: Leg_Up.R
+    100080: Neck
+    100082: Root
+    100084: Thumb_Down.L
+    100086: Thumb_Down.L_end
+    100088: Thumb_Down.R
+    100090: Thumb_Down.R_end
+    100092: Thumb_Up.L
+    100094: Thumb_Up.R
+    100096: Toes.L
+    100098: Toes.L_end
+    100100: Toes.R
+    100102: Toes.R_end
+    100104: Toes_Control.L
+    100106: Toes_Control.L_end
+    100108: Toes_Control.R
+    100110: Toes_Control.R_end
     400000: Arm_Down.L
     400002: Arm_Down.R
     400004: Arm_Up.L
@@ -84,42 +84,45 @@ ModelImporter:
     400040: Head
     400042: Head_end
     400044: Joana
-    400046: Leg_Control.L
-    400048: Leg_Control.R
-    400050: Leg_Down.L
-    400052: Leg_Down.L_end
-    400054: Leg_Down.R
-    400056: Leg_Down.R_end
-    400058: Leg_IK.L
-    400060: Leg_IK.L_end
-    400062: Leg_IK.R
-    400064: Leg_IK.R_end
-    400066: Leg_Poletarget.L
-    400068: Leg_Poletarget.L_end
-    400070: Leg_Poletarget.R
-    400072: Leg_Poletarget.R_end
-    400074: Leg_Up.L
-    400076: Leg_Up.R
-    400078: Neck
-    400080: Root
-    400082: Thumb_Down.L
-    400084: Thumb_Down.L_end
-    400086: Thumb_Down.R
-    400088: Thumb_Down.R_end
-    400090: Thumb_Up.L
-    400092: Thumb_Up.R
-    400094: Toes.L
-    400096: Toes.L_end
-    400098: Toes.R
-    400100: Toes.R_end
-    400102: Toes_Control.L
-    400104: Toes_Control.L_end
-    400106: Toes_Control.R
-    400108: Toes_Control.R_end
-    400110: //RootNode
+    400046: //RootNode
+    400048: Leg_Control.L
+    400050: Leg_Control.R
+    400052: Leg_Down.L
+    400054: Leg_Down.L_end
+    400056: Leg_Down.R
+    400058: Leg_Down.R_end
+    400060: Leg_IK.L
+    400062: Leg_IK.L_end
+    400064: Leg_IK.R
+    400066: Leg_IK.R_end
+    400068: Leg_Poletarget.L
+    400070: Leg_Poletarget.L_end
+    400072: Leg_Poletarget.R
+    400074: Leg_Poletarget.R_end
+    400076: Leg_Up.L
+    400078: Leg_Up.R
+    400080: Neck
+    400082: Root
+    400084: Thumb_Down.L
+    400086: Thumb_Down.L_end
+    400088: Thumb_Down.R
+    400090: Thumb_Down.R_end
+    400092: Thumb_Up.L
+    400094: Thumb_Up.R
+    400096: Toes.L
+    400098: Toes.L_end
+    400100: Toes.R
+    400102: Toes.R_end
+    400104: Toes_Control.L
+    400106: Toes_Control.L_end
+    400108: Toes_Control.R
+    400110: Toes_Control.R_end
     4300000: Joana
-    7400000: Side
-    7400002: Joana|Run
+    7400000: Armature|ArmatureAction
+    7400002: StrafeLeft
+    7400004: Armature|Run
+    7400006: Joana|ArmatureAction
+    7400008: Joana|Run
     9500000: //RootNode
     13700000: Joana
   materials:
@@ -144,10 +147,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Side
-      takeName: Armature|Run
+      name: StrafeLeft
+      takeName: Armature|ArmatureAction.001
       firstFrame: 0
-      lastFrame: 24
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

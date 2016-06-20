@@ -9,22 +9,39 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private Transform cameraRelative2Player;
-    [SerializeField] private Transform cameraOverview;
-    [SerializeField] [HideInInspector] private PlayerStats m_PlayerStats;
-    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
-    [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
-    [SerializeField] private float m_BackwardSpeed;  // Speed modifier when walking backwards
-    [SerializeField] private float m_StrafeSpeed;    // Speed modifier when walking sideways
-    [SerializeField] private float m_JumpSpeed;
-    [SerializeField] private float m_StickToGroundForce;
-    [SerializeField] private float m_GravityMultiplier;
-    [SerializeField] private float m_StepInterval;
-    [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
-    [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
-    [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField]
+    private Transform cameraRelative2Player;
+    [SerializeField]
+    private Transform cameraOverview;
+    [SerializeField]
+    [HideInInspector]
+    private PlayerStats m_PlayerStats;
+    [SerializeField]
+    private ThirdPersonMouseLook m_MouseLook;
+    [SerializeField]
+    private float m_ForwardSpeed;   // Speed modifier when walking forwards
+    [SerializeField]
+    private float m_BackwardSpeed;  // Speed modifier when walking backwards
+    [SerializeField]
+    private float m_StrafeSpeed;    // Speed modifier when walking sideways
+    [SerializeField]
+    private float m_JumpSpeed;
+    [SerializeField]
+    private float m_StickToGroundForce;
+    [SerializeField]
+    private float m_GravityMultiplier;
+    [SerializeField]
+    private float m_StepInterval;
+    [SerializeField]
+    private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+    [SerializeField]
+    private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
+    [SerializeField]
+    private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private LayerMask whatIsGround;
     float groundRadius = 1f;
     bool grounded = false;
 
@@ -47,6 +64,7 @@ public class ThirdPersonController : MonoBehaviour
     private int m_attackState;
     private float m_attackTimeOut;
     private AudioSource m_AudioSource;
+    AnimatorStateInfo animState;
 
     // Use this for initialization
     private void Start()
@@ -70,24 +88,37 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(dyingFromFall)
+        animState = m_Animator.GetCurrentAnimatorStateInfo(0); 
+        if (dyingFromFall)
         {
             m_Camera.transform.LookAt(transform);
             return;
         }
-        
+
         if (m_attackTimeOut >= 0)
             m_attackTimeOut -= Time.deltaTime;
         else
         {
             m_attackState = 0;
         }
-
+        if (m_Attacking)
+        {
+            
+            if (animState.normalizedTime >= 1)
+            { 
+                Debug.Log(animState.normalizedTime);
+                m_Attacking = false;
+            }
+        }
         RotateView();
         // the jump state needs to read here to make sure it is not missed
         if (grounded)
         {
-            m_Attack = CrossPlatformInputManager.GetButtonDown("Fire1");
+            if (!m_Attacking)
+            {
+                m_Attack = CrossPlatformInputManager.GetButtonDown("Fire1");
+
+            }
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 
 
@@ -97,7 +128,7 @@ public class ThirdPersonController : MonoBehaviour
         if (!m_PreviouslyGrounded && grounded)
         {
             PlayLandingSound();
-            m_MoveDir.y = 0f;
+m_MoveDir.y = 0f;
             m_Jumping = false;
         }
         if (!grounded && !m_Jumping && m_PreviouslyGrounded)
@@ -110,226 +141,226 @@ public class ThirdPersonController : MonoBehaviour
 
 
     private void PlayLandingSound()
+{
+    m_AudioSource.clip = m_LandSound;
+    m_AudioSource.Play();
+    m_NextStep = m_StepCycle + .5f;
+}
+
+
+private void FixedUpdate()
+{
+    if (dyingFromFall)
+        return;
+
+    grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
+
+    float speed;
+    GetInput(out speed);
+    // always move along the camera forward as it is the direction that it being aimed at
+    Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
+
+    // get a normal for the surface that is being touched to move along it
+    RaycastHit hitInfo;
+    Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
+                        m_CharacterController.height / 2f, ~0, QueryTriggerInteraction.Ignore);
+    desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
+
+    m_MoveDir.x = desiredMove.x * speed;
+    m_MoveDir.z = desiredMove.z * speed;
+
+
+    if (grounded)
     {
-        m_AudioSource.clip = m_LandSound;
-        m_AudioSource.Play();
-        m_NextStep = m_StepCycle + .5f;
-    }
+        m_MoveDir.y = -m_StickToGroundForce;
 
-
-    private void FixedUpdate()
-    {
-        if (dyingFromFall)
-            return;
-
-        grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
-
-        float speed;
-        GetInput(out speed);
-        // always move along the camera forward as it is the direction that it being aimed at
-        Vector3 desiredMove = transform.forward * m_Input.y + transform.right * m_Input.x;
-
-        // get a normal for the surface that is being touched to move along it
-        RaycastHit hitInfo;
-        Physics.SphereCast(transform.position, m_CharacterController.radius, Vector3.down, out hitInfo,
-                            m_CharacterController.height / 2f, ~0, QueryTriggerInteraction.Ignore);
-        desiredMove = Vector3.ProjectOnPlane(desiredMove, hitInfo.normal).normalized;
-
-        m_MoveDir.x = desiredMove.x * speed;
-        m_MoveDir.z = desiredMove.z * speed;
-
-
-        if (grounded)
+        if (m_Jump)
         {
-            m_MoveDir.y = -m_StickToGroundForce;
-
-            if (m_Jump)
-            {
-                Debug.Log("Jump");
-                m_MoveDir.y = m_JumpSpeed;
-                PlayJumpSound();
-                m_Jump = false;
-                m_Jumping = true;
-            }
-            if (m_Attack)
-            {
-                Debug.Log("Attack");
-                m_Attacking = true;
-                m_Attack = false;
-                switch (m_attackState)
-                {
-                    case 0:
-                        m_attackTimeOut = 2.5f;
-                        m_attackState = 1;
-                        break;
-                    case 1:
-                        m_attackTimeOut = 2.5f;
-                        m_attackState = 2;
-                        break;
-                    case 2:
-                        m_attackTimeOut = 2.5f;
-                        int specialAttack = Random.Range(0,1);
-                        if (specialAttack == 0)
-                            m_attackState = 0;
-                        else
-                            m_attackState = 1;
-                        break;
-                    case 3:
-                        m_attackTimeOut = 2.5f;
-                        break;
-                }
-                Invoke("EndAttack", 1.0f);
-            }
+            m_MoveDir.y = m_JumpSpeed;
+            PlayJumpSound();
+            m_Jump = false;
+            m_Jumping = true;
         }
-        else
+        if (m_Attack)
         {
-            m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
-        }
-        m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
-
-        ProgressStepCycle(speed);
-
-        m_MouseLook.UpdateCursorLock();
-
-        UpdateAnimator();
-    }
-
-    private void EndAttack()
-    {
-        m_Attacking = false;
-    }
-
-    private void PlayJumpSound()
-    {
-        m_AudioSource.clip = m_JumpSound;
-        m_AudioSource.Play();
-    }
-
-
-    private void ProgressStepCycle(float speed)
-    {
-        if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
-        {
-            m_StepCycle += (m_CharacterController.velocity.magnitude + speed) * Time.fixedDeltaTime;
-        }
-
-        if (!(m_StepCycle > m_NextStep))
-        {
-            return;
-        }
-
-        m_NextStep = m_StepCycle + m_StepInterval;
-
-        PlayFootStepAudio();
-    }
-
-
-    private void PlayFootStepAudio()
-    {
-        if (!grounded)
-        {
-            return;
-        }
-        // pick & play a random footstep sound from the array,
-        // excluding sound at index 0
-        int n = Random.Range(1, m_FootstepSounds.Length);
-        //m_AudioSource.clip = m_FootstepSounds[n];
-        // m_AudioSource.PlayOneShot(m_AudioSource.clip);
-        // move picked sound to index 0 so it's not picked next time
-        // m_FootstepSounds[n] = m_FootstepSounds[0];
-        // m_FootstepSounds[0] = m_AudioSource.clip;
-    }
-
-
-    private void GetInput(out float speed)
-    {
-        // Read input
-        float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-        float vertical = CrossPlatformInputManager.GetAxis("Vertical");
-
-        m_Input = new Vector2(horizontal, vertical);
-
-        // set the desired speed
-        speed = 0; //default speed is 0
-        if (m_Input.x > 0 || m_Input.x < 0)
-        {
-            //strafe
-            speed = m_StrafeSpeed * m_PlayerStats.MovementSpeed;
-        }
-        if (m_Input.y < 0)
-        {
-            //backwards
-            speed = m_BackwardSpeed * m_PlayerStats.MovementSpeed;
-        }
-        else if (m_Input.y > 0)
-        {
-            //forwards
-            //handled last as if strafing and moving forward at the same time forwards speed should take precedence
-            speed = m_ForwardSpeed * m_PlayerStats.MovementSpeed;
-        }
-
-        // normalize input if it exceeds 1 in combined length:
-        if (m_Input.sqrMagnitude > 1)
-        {
-            m_Input.Normalize();
+            m_Attack = false;
+            Attack();
         }
     }
-
-
-    private void RotateView()
+    else
     {
-        m_MouseLook.LookRotation(transform, m_Camera.transform);
+        m_MoveDir += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
+    }
+    m_CollisionFlags = m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
+
+    ProgressStepCycle(speed);
+
+    m_MouseLook.UpdateCursorLock();
+
+    UpdateAnimator();
+}
+
+private void Attack()
+{
+
+        m_Attacking = true;
+        switch (m_attackState)
+    {
+        case 0:
+            m_attackTimeOut = 1.5f;
+            m_attackState = 1;
+            break;
+        case 1:
+            m_attackTimeOut = 1.5f;
+            m_attackState = 2;
+            break;
+        case 2:
+            m_attackTimeOut = 2.5f;
+            int specialAttack = Random.Range(0, 2);
+            if (specialAttack == 0)
+                m_attackState = 0;
+            else
+                m_attackState = 3;
+            break;
+        case 3:
+            m_attackTimeOut = 1.5f;
+            m_attackState = 0;
+            break;
     }
 
-    void UpdateAnimator()
+}
+
+private void PlayJumpSound()
+{
+    m_AudioSource.clip = m_JumpSound;
+    m_AudioSource.Play();
+}
+
+
+private void ProgressStepCycle(float speed)
+{
+    if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
     {
-
-        // update the animator parameters
-        m_Animator.SetFloat("Forward", m_Input.y, 0.1f, Time.deltaTime);
-        m_Animator.SetFloat("Strafe", m_Input.x, 0.1f, Time.deltaTime);
-        m_Animator.SetBool("Crouch", false);
-        m_Animator.SetBool("OnGround", grounded);
-        m_Animator.SetBool("Attacking", m_Attacking);
-        m_Animator.SetInteger("AttackState", m_attackState);
-        if (!grounded)
-        {
-            m_Animator.SetFloat("Jump", m_MoveDir.y);
-        }
-
-        // calculate which leg is behind, so as to leave that leg trailing in the jump animation
-        // (This code is reliant on the specific run cycle offset in our animations,
-        // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
-        float runCycle =
-            Mathf.Repeat(
-                m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + 0.2f, 1);
-        float jumpLeg = (runCycle < 0.5f ? 1 : -1) * m_Input.y;
-        if (grounded)
-        {
-            m_Animator.SetFloat("JumpLeg", jumpLeg);
-        }
+        m_StepCycle += (m_CharacterController.velocity.magnitude + speed) * Time.fixedDeltaTime;
     }
 
-    public void DieFromFall()
+    if (!(m_StepCycle > m_NextStep))
     {
-        dyingFromFall = true;
-        m_Camera.transform.parent = null;
-        Invoke("FinishFall", 2f);
+        return;
     }
 
-    public void FinishFall()
+    m_NextStep = m_StepCycle + m_StepInterval;
+
+    PlayFootStepAudio();
+}
+
+
+private void PlayFootStepAudio()
+{
+    if (!grounded)
     {
-        m_Camera.transform.position = cameraOverview.position;
-        m_Camera.transform.rotation = cameraOverview.rotation;
-        dyingFromFall = false;
-        m_PlayerStats.CmdPlayerDeath();
+        return;
+    }
+    // pick & play a random footstep sound from the array,
+    // excluding sound at index 0
+    int n = Random.Range(1, m_FootstepSounds.Length);
+    //m_AudioSource.clip = m_FootstepSounds[n];
+    // m_AudioSource.PlayOneShot(m_AudioSource.clip);
+    // move picked sound to index 0 so it's not picked next time
+    // m_FootstepSounds[n] = m_FootstepSounds[0];
+    // m_FootstepSounds[0] = m_AudioSource.clip;
+}
+
+
+private void GetInput(out float speed)
+{
+    // Read input
+    float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+    float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+
+    m_Input = new Vector2(horizontal, vertical);
+
+    // set the desired speed
+    speed = 0; //default speed is 0
+    if (m_Input.x > 0 || m_Input.x < 0)
+    {
+        //strafe
+        speed = m_StrafeSpeed * m_PlayerStats.MovementSpeed;
+    }
+    if (m_Input.y < 0)
+    {
+        //backwards
+        speed = m_BackwardSpeed * m_PlayerStats.MovementSpeed;
+    }
+    else if (m_Input.y > 0)
+    {
+        //forwards
+        //handled last as if strafing and moving forward at the same time forwards speed should take precedence
+        speed = m_ForwardSpeed * m_PlayerStats.MovementSpeed;
     }
 
-    public void ResetCamera()
+    // normalize input if it exceeds 1 in combined length:
+    if (m_Input.sqrMagnitude > 1)
     {
-        m_Camera.transform.parent = transform;
-        m_Camera.transform.position = cameraRelative2Player.position;
-        m_Camera.transform.rotation = cameraRelative2Player.rotation;
+        m_Input.Normalize();
     }
+}
+
+
+private void RotateView()
+{
+    m_MouseLook.LookRotation(transform, m_Camera.transform);
+}
+
+void UpdateAnimator()
+{
+
+    // update the animator parameters
+    m_Animator.SetFloat("Forward", m_Input.y, 0.1f, Time.deltaTime);
+    m_Animator.SetFloat("Strafe", m_Input.x, 0.1f, Time.deltaTime);
+    m_Animator.SetBool("Crouch", false);
+    m_Animator.SetBool("OnGround", grounded);
+    m_Animator.SetBool("Attacking", m_Attacking);
+    m_Animator.SetInteger("AttackState", m_attackState);
+    if (!grounded)
+    {
+        m_Animator.SetFloat("Jump", m_MoveDir.y);
+    }
+
+    // calculate which leg is behind, so as to leave that leg trailing in the jump animation
+    // (This code is reliant on the specific run cycle offset in our animations,
+    // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
+    float runCycle =
+        Mathf.Repeat(
+            m_Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + 0.2f, 1);
+    float jumpLeg = (runCycle < 0.5f ? 1 : -1) * m_Input.y;
+    if (grounded)
+    {
+        m_Animator.SetFloat("JumpLeg", jumpLeg);
+    }
+}
+
+public void DieFromFall()
+{
+    dyingFromFall = true;
+    m_Camera.transform.parent = null;
+    Invoke("FinishFall", 2f);
+}
+
+public void FinishFall()
+{
+    m_Camera.transform.position = cameraOverview.position;
+    m_Camera.transform.rotation = cameraOverview.rotation;
+    dyingFromFall = false;
+    m_PlayerStats.CmdPlayerDeath();
+}
+
+public void ResetCamera()
+{
+    m_Camera.transform.parent = transform;
+    m_Camera.transform.position = cameraRelative2Player.position;
+    m_Camera.transform.rotation = cameraRelative2Player.rotation;
+}
 
     // Used to add force upon collision between character controller and a rigidbody
     //private void OnControllerColliderHit(ControllerColliderHit hit)

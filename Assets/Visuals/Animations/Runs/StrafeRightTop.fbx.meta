@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 125cfa8c4558dac4e867fd257d8034f4
-timeCreated: 1466357101
+guid: af824d12766052e458fc08cc6bfc1cf9
+timeCreated: 1466356078
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -12,22 +12,22 @@ ModelImporter:
     100008: Armature
     100010: Back
     100012: Butt
-    100014: Fingers_Down.L
-    100016: Fingers_Down.L_end
-    100018: Fingers_Down.R
-    100020: Fingers_Down.R_end
-    100022: Fingers_Up.L
-    100024: Fingers_Up.R
-    100026: Foot.L
-    100028: Foot.R
-    100030: Foot_Roll.L
-    100032: Foot_Roll.R
-    100034: Hand.L
-    100036: Hand.R
-    100038: Head
-    100040: Head_end
-    100042: Joana
-    100044: //RootNode
+    100014: Camera
+    100016: Fingers_Down.L
+    100018: Fingers_Down.L_end
+    100020: Fingers_Down.R
+    100022: Fingers_Down.R_end
+    100024: Fingers_Up.L
+    100026: Fingers_Up.R
+    100028: Foot.L
+    100030: Foot.R
+    100032: Foot_Roll.L
+    100034: Foot_Roll.R
+    100036: Hand.L
+    100038: Hand.R
+    100040: Head
+    100042: Head_end
+    100044: Joana
     100046: Leg_Control.L
     100048: Leg_Control.R
     100050: Leg_Down.L
@@ -60,6 +60,7 @@ ModelImporter:
     100104: Toes_Control.L_end
     100106: Toes_Control.R
     100108: Toes_Control.R_end
+    100110: //RootNode
     400000: Arm_Down.L
     400002: Arm_Down.R
     400004: Arm_Up.L
@@ -67,22 +68,22 @@ ModelImporter:
     400008: Armature
     400010: Back
     400012: Butt
-    400014: Fingers_Down.L
-    400016: Fingers_Down.L_end
-    400018: Fingers_Down.R
-    400020: Fingers_Down.R_end
-    400022: Fingers_Up.L
-    400024: Fingers_Up.R
-    400026: Foot.L
-    400028: Foot.R
-    400030: Foot_Roll.L
-    400032: Foot_Roll.R
-    400034: Hand.L
-    400036: Hand.R
-    400038: Head
-    400040: Head_end
-    400042: Joana
-    400044: //RootNode
+    400014: Camera
+    400016: Fingers_Down.L
+    400018: Fingers_Down.L_end
+    400020: Fingers_Down.R
+    400022: Fingers_Down.R_end
+    400024: Fingers_Up.L
+    400026: Fingers_Up.R
+    400028: Foot.L
+    400030: Foot.R
+    400032: Foot_Roll.L
+    400034: Foot_Roll.R
+    400036: Hand.L
+    400038: Hand.R
+    400040: Head
+    400042: Head_end
+    400044: Joana
     400046: Leg_Control.L
     400048: Leg_Control.R
     400050: Leg_Down.L
@@ -115,10 +116,10 @@ ModelImporter:
     400104: Toes_Control.L_end
     400106: Toes_Control.R
     400108: Toes_Control.R_end
+    400110: //RootNode
     4300000: Joana
-    7400000: SpecialAttack
-    7400002: Armature|Run
-    7400004: Joana|Run
+    7400000: StrafeRTop
+    7400002: Joana|Run
     9500000: //RootNode
     13700000: Joana
   materials:
@@ -143,17 +144,17 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: SpecialAttack
-      takeName: Armature|ArmatureAction
+      name: StrafeRTop
+      takeName: Armature|Run
       firstFrame: 0
-      lastFrame: 26
+      lastFrame: 24
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -274,6 +275,8 @@ ModelImporter:
       - path: Armature/Root/Leg_Poletarget.R
         weight: 1
       - path: Armature/Root/Leg_Poletarget.R/Leg_Poletarget.R_end
+        weight: 1
+      - path: Camera
         weight: 1
       - path: Joana
         weight: 1

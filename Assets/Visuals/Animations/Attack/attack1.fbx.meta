@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 125cfa8c4558dac4e867fd257d8034f4
-timeCreated: 1466357101
+guid: 901bbff252ae69547906f3d5994ff709
+timeCreated: 1466378159
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -10,115 +10,116 @@ ModelImporter:
     100004: Arm_Up.L
     100006: Arm_Up.R
     100008: Armature
-    100010: Back
-    100012: Butt
-    100014: Fingers_Down.L
-    100016: Fingers_Down.L_end
-    100018: Fingers_Down.R
-    100020: Fingers_Down.R_end
-    100022: Fingers_Up.L
-    100024: Fingers_Up.R
-    100026: Foot.L
-    100028: Foot.R
-    100030: Foot_Roll.L
-    100032: Foot_Roll.R
-    100034: Hand.L
-    100036: Hand.R
-    100038: Head
-    100040: Head_end
-    100042: Joana
-    100044: //RootNode
-    100046: Leg_Control.L
-    100048: Leg_Control.R
-    100050: Leg_Down.L
-    100052: Leg_Down.L_end
-    100054: Leg_Down.R
-    100056: Leg_Down.R_end
-    100058: Leg_IK.L
-    100060: Leg_IK.L_end
-    100062: Leg_IK.R
-    100064: Leg_IK.R_end
-    100066: Leg_Poletarget.L
-    100068: Leg_Poletarget.L_end
-    100070: Leg_Poletarget.R
-    100072: Leg_Poletarget.R_end
-    100074: Leg_Up.L
-    100076: Leg_Up.R
-    100078: Neck
-    100080: Root
-    100082: Thumb_Down.L
-    100084: Thumb_Down.L_end
-    100086: Thumb_Down.R
-    100088: Thumb_Down.R_end
-    100090: Thumb_Up.L
-    100092: Thumb_Up.R
-    100094: Toes.L
-    100096: Toes.L_end
-    100098: Toes.R
-    100100: Toes.R_end
-    100102: Toes_Control.L
-    100104: Toes_Control.L_end
-    100106: Toes_Control.R
-    100108: Toes_Control.R_end
+    100010: //RootNode
+    100012: Back
+    100014: Butt
+    100016: Camera
+    100018: Fingers_Down.L
+    100020: Fingers_Down.L_end
+    100022: Fingers_Down.R
+    100024: Fingers_Down.R_end
+    100026: Fingers_Up.L
+    100028: Fingers_Up.R
+    100030: Foot.L
+    100032: Foot.R
+    100034: Foot_Roll.L
+    100036: Foot_Roll.R
+    100038: Hand.L
+    100040: Hand.R
+    100042: Head
+    100044: Head_end
+    100046: Joana
+    100048: Leg_Control.L
+    100050: Leg_Control.R
+    100052: Leg_Down.L
+    100054: Leg_Down.L_end
+    100056: Leg_Down.R
+    100058: Leg_Down.R_end
+    100060: Leg_IK.L
+    100062: Leg_IK.L_end
+    100064: Leg_IK.R
+    100066: Leg_IK.R_end
+    100068: Leg_Poletarget.L
+    100070: Leg_Poletarget.L_end
+    100072: Leg_Poletarget.R
+    100074: Leg_Poletarget.R_end
+    100076: Leg_Up.L
+    100078: Leg_Up.R
+    100080: Neck
+    100082: Root
+    100084: Thumb_Down.L
+    100086: Thumb_Down.L_end
+    100088: Thumb_Down.R
+    100090: Thumb_Down.R_end
+    100092: Thumb_Up.L
+    100094: Thumb_Up.R
+    100096: Toes.L
+    100098: Toes.L_end
+    100100: Toes.R
+    100102: Toes.R_end
+    100104: Toes_Control.L
+    100106: Toes_Control.L_end
+    100108: Toes_Control.R
+    100110: Toes_Control.R_end
     400000: Arm_Down.L
     400002: Arm_Down.R
     400004: Arm_Up.L
     400006: Arm_Up.R
     400008: Armature
-    400010: Back
-    400012: Butt
-    400014: Fingers_Down.L
-    400016: Fingers_Down.L_end
-    400018: Fingers_Down.R
-    400020: Fingers_Down.R_end
-    400022: Fingers_Up.L
-    400024: Fingers_Up.R
-    400026: Foot.L
-    400028: Foot.R
-    400030: Foot_Roll.L
-    400032: Foot_Roll.R
-    400034: Hand.L
-    400036: Hand.R
-    400038: Head
-    400040: Head_end
-    400042: Joana
-    400044: //RootNode
-    400046: Leg_Control.L
-    400048: Leg_Control.R
-    400050: Leg_Down.L
-    400052: Leg_Down.L_end
-    400054: Leg_Down.R
-    400056: Leg_Down.R_end
-    400058: Leg_IK.L
-    400060: Leg_IK.L_end
-    400062: Leg_IK.R
-    400064: Leg_IK.R_end
-    400066: Leg_Poletarget.L
-    400068: Leg_Poletarget.L_end
-    400070: Leg_Poletarget.R
-    400072: Leg_Poletarget.R_end
-    400074: Leg_Up.L
-    400076: Leg_Up.R
-    400078: Neck
-    400080: Root
-    400082: Thumb_Down.L
-    400084: Thumb_Down.L_end
-    400086: Thumb_Down.R
-    400088: Thumb_Down.R_end
-    400090: Thumb_Up.L
-    400092: Thumb_Up.R
-    400094: Toes.L
-    400096: Toes.L_end
-    400098: Toes.R
-    400100: Toes.R_end
-    400102: Toes_Control.L
-    400104: Toes_Control.L_end
-    400106: Toes_Control.R
-    400108: Toes_Control.R_end
+    400010: //RootNode
+    400012: Back
+    400014: Butt
+    400016: Camera
+    400018: Fingers_Down.L
+    400020: Fingers_Down.L_end
+    400022: Fingers_Down.R
+    400024: Fingers_Down.R_end
+    400026: Fingers_Up.L
+    400028: Fingers_Up.R
+    400030: Foot.L
+    400032: Foot.R
+    400034: Foot_Roll.L
+    400036: Foot_Roll.R
+    400038: Hand.L
+    400040: Hand.R
+    400042: Head
+    400044: Head_end
+    400046: Joana
+    400048: Leg_Control.L
+    400050: Leg_Control.R
+    400052: Leg_Down.L
+    400054: Leg_Down.L_end
+    400056: Leg_Down.R
+    400058: Leg_Down.R_end
+    400060: Leg_IK.L
+    400062: Leg_IK.L_end
+    400064: Leg_IK.R
+    400066: Leg_IK.R_end
+    400068: Leg_Poletarget.L
+    400070: Leg_Poletarget.L_end
+    400072: Leg_Poletarget.R
+    400074: Leg_Poletarget.R_end
+    400076: Leg_Up.L
+    400078: Leg_Up.R
+    400080: Neck
+    400082: Root
+    400084: Thumb_Down.L
+    400086: Thumb_Down.L_end
+    400088: Thumb_Down.R
+    400090: Thumb_Down.R_end
+    400092: Thumb_Up.L
+    400094: Thumb_Up.R
+    400096: Toes.L
+    400098: Toes.L_end
+    400100: Toes.R
+    400102: Toes.R_end
+    400104: Toes_Control.L
+    400106: Toes_Control.L_end
+    400108: Toes_Control.R
+    400110: Toes_Control.R_end
     4300000: Joana
-    7400000: SpecialAttack
-    7400002: Armature|Run
-    7400004: Joana|Run
+    7400000: attack1
+    7400002: Joana|Attack
     9500000: //RootNode
     13700000: Joana
   materials:
@@ -143,10 +144,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: SpecialAttack
-      takeName: Armature|ArmatureAction
-      firstFrame: 0
-      lastFrame: 26
+      name: attack1
+      takeName: Armature|Attack
+      firstFrame: 4
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -274,6 +275,8 @@ ModelImporter:
       - path: Armature/Root/Leg_Poletarget.R
         weight: 1
       - path: Armature/Root/Leg_Poletarget.R/Leg_Poletarget.R_end
+        weight: 1
+      - path: Camera
         weight: 1
       - path: Joana
         weight: 1
