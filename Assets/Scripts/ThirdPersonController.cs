@@ -89,8 +89,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             m_Attack = CrossPlatformInputManager.GetButtonDown("Fire1");
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-
-
         }
 
 

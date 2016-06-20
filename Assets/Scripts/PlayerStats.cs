@@ -14,7 +14,8 @@ public class PlayerStats : NetworkBehaviour
     [SerializeField] [HideInInspector] private float _attackSpeed;
 
     // Status effects
-    [SerializeField]  private bool _frozen;
+    [SerializeField] private bool _frozen;
+    [SerializeField] private bool _leader;
 
 
     public ThirdPersonController thirdPersonController;
@@ -105,6 +106,18 @@ public class PlayerStats : NetworkBehaviour
         private set
         {
             _frozen = value;
+        }
+    }
+
+    public bool Leader
+    {
+        get
+        {
+            return _leader;
+        }
+        set
+        {
+            _leader = value;
         }
     }
 
