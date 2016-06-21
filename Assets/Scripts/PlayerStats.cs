@@ -6,15 +6,28 @@ public class PlayerStats : NetworkBehaviour
     //ERRORS ir buscar damage
 
     // Basic stats for the character
-    [SerializeField] [HideInInspector] private int _armor;
-    [SerializeField] [HideInInspector] private int _health;
-    [SerializeField] [HideInInspector] private int _energy;
-    [SerializeField] [HideInInspector] private int _damage;
-    [SerializeField] [HideInInspector] private int _movementSpeed;
-    [SerializeField] [HideInInspector] private float _attackSpeed;
+    [SerializeField]
+    [HideInInspector]
+    private int _armor;
+    [SerializeField]
+    [HideInInspector]
+    private int _health;
+    [SerializeField]
+    [HideInInspector]
+    private int _energy;
+    [SerializeField]
+    [HideInInspector]
+    private int _damage;
+    [SerializeField]
+    [HideInInspector]
+    private int _movementSpeed;
+    [SerializeField]
+    [HideInInspector]
+    private float _attackSpeed;
 
     // Status effects
-    [SerializeField]  private bool _frozen;
+    [SerializeField]
+    private bool _frozen;
 
 
     public ThirdPersonController thirdPersonController;
@@ -34,7 +47,7 @@ public class PlayerStats : NetworkBehaviour
             _armor = value;
         }
     }
-    
+
     public int Health
     {
         get
@@ -114,9 +127,9 @@ public class PlayerStats : NetworkBehaviour
         renderers = GetComponentsInChildren<Renderer>();
 
         Armor = 10;
-        Health = 500;
+        Health = 100;
         Energy = 150;
-        Damage = 43;
+        Damage = 50;
         AttackSpeed = 0.93f;
         MovementSpeed = 100;
 
@@ -143,6 +156,7 @@ public class PlayerStats : NetworkBehaviour
     void ToggleControls(bool isAlive)
     {
         thirdPersonController.enabled = isAlive;
+        
     }
 
     // Methods to be invoked by other functions
@@ -152,11 +166,18 @@ public class PlayerStats : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-            GetComponent<ThirdPersonController>().ResetCamera();
+
+            thirdPersonController.ResetCamera();
+            thirdPersonController.m_Dying = false;
+            thirdPersonController.m_Revive = true;
             ToggleControls(true);
+            Invoke("StopReviving", 1.9f);
         }
     }
-
+    void StopReviving()
+    {
+        thirdPersonController.m_Revive = false;
+    }
     void RemoveFreeze()
     {
         print("Unfreezing");
@@ -196,26 +217,18 @@ public class PlayerStats : NetworkBehaviour
 
 
     // Server side methods (server calls these functons on every client)
-    [ClientRpc]
-    public void RpcResolveHit() // Remove hp check death etc...
+    [Command]
+    public void CmdResolveHit(int amount)
     {
-        ChangeHealth(10); //ERROR Ir buscar damage e aplicar
+        RpcResolveHit(amount);
 
-        if(_health <= 0)
-        {
-            ToggleRenderer(false);
+    }
 
-            if (isLocalPlayer) // Remove controls and Move player to the spawn point
-            {
-                Transform spawn = NetworkManager.singleton.GetStartPosition();
-                transform.position = spawn.position;
-                transform.rotation = spawn.rotation;
+    [ClientRpc]
+    public void RpcResolveHit(int amount) // Remove hp check death etc...
+    {
+        ChangeHealth(amount); //ERROR Ir buscar damage e aplicar
 
-                ToggleControls(false);
-            }
-
-            Invoke("Respawn", 2f);
-        }
     }
 
     [Command]
@@ -231,14 +244,14 @@ public class PlayerStats : NetworkBehaviour
 
         if (isLocalPlayer) // Remove controls and Move player to the spawn point
         {
+
             //Transform spawn = NetworkManager.singleton.GetStartPosition();
             transform.position = new Vector3();
             transform.rotation = Quaternion.identity;
-
             ToggleControls(false);
         }
 
-        Invoke("Respawn", 2f);
+        Invoke("Respawn", 0.1f);
     }
 
     [ClientRpc]
@@ -250,6 +263,31 @@ public class PlayerStats : NetworkBehaviour
             print("player from " + tag + "was frozen");
         Frozen = true;
         Invoke("RemoveFreeze", freezeTime);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (isLocalPlayer)
+        {
+            if (other.tag.Equals("Sword"))
+            {
+                if (!thirdPersonController.m_Dying)
+                {
+                    CmdResolveHit(-other.transform.root.GetComponent<PlayerStats>().Damage);
+
+                    Debug.Log("My health" + Health);
+                    if (Health <= 0)
+                    {
+                        Invoke("CmdPlayerDeath", 2.58f);
+                        thirdPersonController.m_Die = true;
+                    }
+                }
+            }
+            else
+                return;
+        }
+        else
+            return;
     }
 
 }

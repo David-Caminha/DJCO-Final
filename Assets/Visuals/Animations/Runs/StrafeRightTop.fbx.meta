@@ -118,7 +118,7 @@ ModelImporter:
     400108: Toes_Control.R_end
     400110: //RootNode
     4300000: Joana
-    7400000: Side
+    7400000: StrafeRTop
     7400002: Joana|Run
     9500000: //RootNode
     13700000: Joana
@@ -144,7 +144,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Side
+      name: StrafeRTop
       takeName: Armature|Run
       firstFrame: 0
       lastFrame: 24

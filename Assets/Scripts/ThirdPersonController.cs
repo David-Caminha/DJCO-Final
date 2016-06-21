@@ -9,22 +9,39 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonController : MonoBehaviour
 {
-    [SerializeField] private Transform cameraRelative2Player;
-    [SerializeField] private Transform cameraOverview;
-    [SerializeField] [HideInInspector] private PlayerStats m_PlayerStats;
-    [SerializeField] private ThirdPersonMouseLook m_MouseLook;
-    [SerializeField] private float m_ForwardSpeed;   // Speed modifier when walking forwards
-    [SerializeField] private float m_BackwardSpeed;  // Speed modifier when walking backwards
-    [SerializeField] private float m_StrafeSpeed;    // Speed modifier when walking sideways
-    [SerializeField] private float m_JumpSpeed;
-    [SerializeField] private float m_StickToGroundForce;
-    [SerializeField] private float m_GravityMultiplier;
-    [SerializeField] private float m_StepInterval;
-    [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
-    [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
-    [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField]
+    private Transform cameraRelative2Player;
+    [SerializeField]
+    private Transform cameraOverview;
+    [SerializeField]
+    [HideInInspector]
+    private PlayerStats m_PlayerStats;
+    [SerializeField]
+    private ThirdPersonMouseLook m_MouseLook;
+    [SerializeField]
+    private float m_ForwardSpeed;   // Speed modifier when walking forwards
+    [SerializeField]
+    private float m_BackwardSpeed;  // Speed modifier when walking backwards
+    [SerializeField]
+    private float m_StrafeSpeed;    // Speed modifier when walking sideways
+    [SerializeField]
+    private float m_JumpSpeed;
+    [SerializeField]
+    private float m_StickToGroundForce;
+    [SerializeField]
+    private float m_GravityMultiplier;
+    [SerializeField]
+    private float m_StepInterval;
+    [SerializeField]
+    private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+    [SerializeField]
+    private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
+    [SerializeField]
+    private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+    [SerializeField]
+    private Transform groundCheck;
+    [SerializeField]
+    private LayerMask whatIsGround;
     float groundRadius = 1f;
     bool grounded = false;
 
@@ -42,11 +59,18 @@ public class ThirdPersonController : MonoBehaviour
     private float m_StepCycle;
     private float m_NextStep;
     private bool m_Jumping;
+
     private bool m_Attacking;
     private bool m_Attack;
     private int m_attackState;
     private float m_attackTimeOut;
+
+    public bool m_Dying;
+    public bool m_Die;
+    public bool m_Revive;
+
     private AudioSource m_AudioSource;
+    AnimatorStateInfo animState;
 
     // Use this for initialization
     private void Start()
@@ -64,35 +88,60 @@ public class ThirdPersonController : MonoBehaviour
         m_PlayerStats = GetComponent<PlayerStats>();
         m_Attacking = false;
         m_attackTimeOut = 2.5f;
+        m_Dying = false;
+        m_Die = false;
+        m_Revive = false;
     }
 
 
     // Update is called once per frame
     private void Update()
     {
-        if(dyingFromFall)
+        //States verification
+        if (dyingFromFall)
         {
             m_Camera.transform.LookAt(transform);
             return;
         }
-        
+        if (m_Dying)
+        {
+            m_Animator.SetBool("Die", m_Die);
+            return;
+        }
+        if (m_Revive)
+        {
+            return;
+        }
+        if (m_Die)
+        {
+            m_Dying = true;
+            m_Animator.SetBool("Dying", m_Dying);
+            m_Animator.SetBool("Die", m_Die);
+            m_Die = false;
+
+        }
+
+        //StartUpdate functions
+        animState = m_Animator.GetCurrentAnimatorStateInfo(0);
+
         if (m_attackTimeOut >= 0)
             m_attackTimeOut -= Time.deltaTime;
         else
-        {
             m_attackState = 0;
-        }
-
         RotateView();
-        // the jump state needs to read here to make sure it is not missed
+
+        // State readings for animations
         if (grounded)
         {
-            m_Attack = CrossPlatformInputManager.GetButtonDown("Fire1");
+            if (!m_Attacking)
+                m_Attack = CrossPlatformInputManager.GetButton("Fire1");
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-
-
         }
-
+        if (m_Attacking)
+        {
+            if (animState.normalizedTime >= 1)
+                m_Attacking = false;
+        }
 
         if (!m_PreviouslyGrounded && grounded)
         {
@@ -104,7 +153,6 @@ public class ThirdPersonController : MonoBehaviour
         {
             m_MoveDir.y = 0f;
         }
-
         m_PreviouslyGrounded = grounded;
     }
 
@@ -119,9 +167,11 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (dyingFromFall)
+        //State verifications
+        if (dyingFromFall || m_Dying || m_Revive)
             return;
 
+        //FixedUpdate functions
         grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
 
         float speed;
@@ -145,7 +195,6 @@ public class ThirdPersonController : MonoBehaviour
 
             if (m_Jump)
             {
-                Debug.Log("Jump");
                 m_MoveDir.y = m_JumpSpeed;
                 PlayJumpSound();
                 m_Jump = false;
@@ -154,31 +203,8 @@ public class ThirdPersonController : MonoBehaviour
             if (m_Attack)
             {
                 Debug.Log("Attack");
-                m_Attacking = true;
                 m_Attack = false;
-                switch (m_attackState)
-                {
-                    case 0:
-                        m_attackTimeOut = 2.5f;
-                        m_attackState = 1;
-                        break;
-                    case 1:
-                        m_attackTimeOut = 2.5f;
-                        m_attackState = 2;
-                        break;
-                    case 2:
-                        m_attackTimeOut = 2.5f;
-                        int specialAttack = Random.Range(0,1);
-                        if (specialAttack == 0)
-                            m_attackState = 0;
-                        else
-                            m_attackState = 1;
-                        break;
-                    case 3:
-                        m_attackTimeOut = 2.5f;
-                        break;
-                }
-                Invoke("EndAttack", 1.0f);
+                Attack();
             }
         }
         else
@@ -194,9 +220,34 @@ public class ThirdPersonController : MonoBehaviour
         UpdateAnimator();
     }
 
-    private void EndAttack()
+    private void Attack()
     {
-        m_Attacking = false;
+
+        m_Attacking = true;
+        switch (m_attackState)
+        {
+            case 0:
+                m_attackTimeOut = 1.5f;
+                m_attackState = 1;
+                break;
+            case 1:
+                m_attackTimeOut = 1.5f;
+                m_attackState = 2;
+                break;
+            case 2:
+                m_attackTimeOut = 2.5f;
+                int specialAttack = Random.Range(0, 2);
+                if (specialAttack == 0)
+                    m_attackState = 0;
+                else
+                    m_attackState = 3;
+                break;
+            case 3:
+                m_attackTimeOut = 1.5f;
+                m_attackState = 0;
+                break;
+        }
+
     }
 
     private void PlayJumpSound()
@@ -291,6 +342,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Animator.SetBool("OnGround", grounded);
         m_Animator.SetBool("Attacking", m_Attacking);
         m_Animator.SetInteger("AttackState", m_attackState);
+        m_Animator.SetBool("Dying", m_Dying);
         if (!grounded)
         {
             m_Animator.SetFloat("Jump", m_MoveDir.y);
@@ -329,7 +381,9 @@ public class ThirdPersonController : MonoBehaviour
         m_Camera.transform.parent = transform;
         m_Camera.transform.position = cameraRelative2Player.position;
         m_Camera.transform.rotation = cameraRelative2Player.rotation;
+        m_MouseLook.Init(transform, m_Camera.transform);
     }
+
 
     // Used to add force upon collision between character controller and a rigidbody
     //private void OnControllerColliderHit(ControllerColliderHit hit)
