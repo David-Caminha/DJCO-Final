@@ -26,8 +26,8 @@ public class PlayerStats : NetworkBehaviour
     private float _attackSpeed;
 
     // Status effects
-    [SerializeField]
-    private bool _frozen;
+    [SerializeField] private bool _frozen;
+    [SerializeField] private bool _leader;
 
 
     public ThirdPersonController thirdPersonController;
@@ -121,6 +121,18 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
+    public bool Leader
+    {
+        get
+        {
+            return _leader;
+        }
+        set
+        {
+            _leader = value;
+        }
+    }
+
     // Use this for initialization
     public void Start()
     {
@@ -166,7 +178,6 @@ public class PlayerStats : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-
             thirdPersonController.ResetCamera();
             thirdPersonController.m_Dying = false;
             thirdPersonController.m_Revive = true;
