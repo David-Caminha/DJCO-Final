@@ -22,7 +22,7 @@ public class Dash : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             Debug.Log("Dash");
             GetComponent<ThirdPersonController>().enabled = false;

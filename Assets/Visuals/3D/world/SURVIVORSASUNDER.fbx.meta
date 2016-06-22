@@ -1,0 +1,1575 @@
+fileFormatVersion: 2
+guid: 43d30c7ad6ce340478eb70501d9016c8
+timeCreated: 1466562987
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_Down.L
+    100002: Arm_Down.R
+    100004: Arm_Up.L
+    100006: Arm_Up.R
+    100008: Back
+    100010: Bush.3.M.002
+    100012: Bush.4.S.003
+    100014: Bush1
+    100016: Bush2
+    100018: Bush3
+    100020: Bush4
+    100022: Bush5
+    100024: Bush6
+    100026: Bush7
+    100028: Bush8
+    100030: Bush9
+    100032: Butt
+    100034: Cacti1
+    100036: Cacti2
+    100038: Cacti3
+    100040: Cacti4
+    100042: Cacti5
+    100044: Cacti6
+    100046: Cacti7
+    100048: Cacti8
+    100050: Cacti9
+    100052: Cave Spikes
+    100054: Character_example
+    100056: Cloud 1
+    100058: Cloud 1.001
+    100060: Cloud 10
+    100062: Cloud 11
+    100064: Cloud 11.001
+    100066: Cloud 12
+    100068: Cloud 13
+    100070: Cloud 14
+    100072: Cloud 15
+    100074: Cloud 16
+    100076: Cloud 17
+    100078: Cloud 18
+    100080: Cloud 18.001
+    100082: Cloud 19
+    100084: Cloud 2
+    100086: Cloud 20
+    100088: Cloud 20.001
+    100090: Cloud 21
+    100092: Cloud 21.001
+    100094: Cloud 22
+    100096: Cloud 3
+    100098: Cloud 3.001
+    100100: Cloud 4
+    100102: Cloud 5
+    100104: Cloud 6
+    100106: Cloud 7
+    100108: Cloud 8
+    100110: Cloud 9
+    100112: Colosso
+    100114: Colosso.001
+    100116: Colosso_mask
+    100118: Cube.009
+    100120: Elevator1
+    100122: Elevator2
+    100124: Elevator3
+    100126: Elevator4
+    100128: Fingers_Down.L
+    100130: Fingers_Down.L_end
+    100132: Fingers_Down.L_end_end
+    100134: Fingers_Down.L_end_end_end
+    100136: Fingers_Down.R
+    100138: Fingers_Down.R_end
+    100140: Fingers_Down.R_end_end
+    100142: Fingers_Down.R_end_end_end
+    100144: Fingers_Up.L
+    100146: Fingers_Up.R
+    100148: Foot.L
+    100150: Foot.R
+    100152: Foot_Roll.L
+    100154: Foot_Roll.R
+    100156: Grass.000
+    100158: Grass.001
+    100160: Grass.002
+    100162: Grass.003
+    100164: Grass.004
+    100166: Grass.005
+    100168: Grass.006
+    100170: Grass.007
+    100172: Grass.008
+    100174: Grass.009
+    100176: Grass.011
+    100178: Grass.012
+    100180: Grass.013
+    100182: Grass.014
+    100184: Grass.015
+    100186: Grass.016
+    100188: Grass.017
+    100190: Grass.018
+    100192: Grass.019
+    100194: Grass.020
+    100196: Grass.021
+    100198: Grass.022
+    100200: Grass.023
+    100202: Grass.024
+    100204: Grass.025
+    100206: Grass.026
+    100208: Grass.027
+    100210: Grass.028
+    100212: Grass.029
+    100214: Grass.030
+    100216: Grass.032
+    100218: Grass.033
+    100220: Grass.036
+    100222: Grass.037
+    100224: Grass.038
+    100226: Grass.039
+    100228: Grass.040
+    100230: Grass.041
+    100232: Grass.042
+    100234: Grass.043
+    100236: Grass.044
+    100238: Grass.045
+    100240: Grass.046
+    100242: Grass.047
+    100244: Grass.048
+    100246: Grass.049
+    100248: Grass.050
+    100250: Grass.051
+    100252: Grass.052
+    100254: Grass.054
+    100256: Grass.055
+    100258: Grass.056
+    100260: Grass.058
+    100262: Grass.060
+    100264: Grass.105
+    100266: Grass.61
+    100268: Hand.L
+    100270: Hand.R
+    100272: Head
+    100274: Head_end
+    100276: Head_end_end
+    100278: Island Bottom
+    100280: Island Top
+    100282: Lava1
+    100284: Lava10
+    100286: Lava11
+    100288: Lava12
+    100290: Lava13
+    100292: Lava2
+    100294: Lava3
+    100296: Lava4
+    100298: Lava5
+    100300: Lava6
+    100302: Lava7
+    100304: Lava8
+    100306: Lava9
+    100308: Leg_Control.L
+    100310: Leg_Control.R
+    100312: Leg_Down.L
+    100314: Leg_Down.L_end
+    100316: Leg_Down.L_end_end
+    100318: Leg_Down.R
+    100320: Leg_Down.R_end
+    100322: Leg_Down.R_end_end
+    100324: Leg_IK.L
+    100326: Leg_IK.L_end
+    100328: Leg_IK.L_end_end
+    100330: Leg_IK.R
+    100332: Leg_IK.R_end
+    100334: Leg_IK.R_end_end
+    100336: Leg_IK.R_end_end_end
+    100338: Leg_Poletarget.L
+    100340: Leg_Poletarget.L_end
+    100342: Leg_Poletarget.L_end_end
+    100344: Leg_Poletarget.R
+    100346: Leg_Poletarget.R_end
+    100348: Leg_Poletarget.R_end_end
+    100350: Leg_Up.L
+    100352: Leg_Up.R
+    100354: Mountain.1
+    100356: Mountain.2
+    100358: Mountain.3
+    100360: Mountain.4
+    100362: Mountain.5
+    100364: Mountain.Base
+    100366: Neck
+    100368: Placa 1
+    100370: Placa 2
+    100372: Placa 3
+    100374: Placa 4
+    100376: Placa God
+    100378: Placa Sorry
+    100380: Platform.000
+    100382: Platform.005
+    100384: Platform.006
+    100386: Platform.007
+    100388: Platform.1
+    100390: Platform.2
+    100392: Platform.3
+    100394: Platform.4
+    100396: Rock1
+    100398: Rock10
+    100400: Rock10.004
+    100402: Rock10.005
+    100404: Rock10.006
+    100406: Rock10.007
+    100408: Rock10.008
+    100410: Rock11
+    100412: Rock12
+    100414: Rock13
+    100416: Rock14
+    100418: Rock14.003
+    100420: Rock14.004
+    100422: Rock15
+    100424: Rock16
+    100426: Rock16.001
+    100428: Rock16.002
+    100430: Rock17
+    100432: Rock17.001
+    100434: Rock18
+    100436: Rock19
+    100438: Rock2
+    100440: Rock2.004
+    100442: Rock2.005
+    100444: Rock20
+    100446: Rock21
+    100448: Rock22
+    100450: Rock23
+    100452: Rock24
+    100454: Rock25
+    100456: Rock26
+    100458: Rock27
+    100460: Rock28
+    100462: Rock29
+    100464: Rock3
+    100466: Rock30
+    100468: Rock31
+    100470: Rock32
+    100472: Rock33
+    100474: Rock34
+    100476: Rock35
+    100478: Rock4
+    100480: Rock5
+    100482: Rock6
+    100484: Rock7
+    100486: Rock8
+    100488: Rock8.004
+    100490: Rock8.005
+    100492: Rock8.006
+    100494: Rock8.007
+    100496: Rock9
+    100498: Rock9.004
+    100500: Rock9.005
+    100502: Rock9.006
+    100504: Root
+    100506: Stonehenge.base
+    100508: Stonehenge.bottom1
+    100510: Stonehenge.bottom2
+    100512: Stonehenge.bottom3
+    100514: Stonehenge.bottom4
+    100516: Stonehenge.bottom5
+    100518: Stonehenge.bottom6
+    100520: Stonehenge.bottom7
+    100522: Stonehenge.top1
+    100524: Stonehenge.top2
+    100526: Stonehenge.top3
+    100528: Stonehenge.top4
+    100530: Stonehenge.top4.001
+    100532: Stonehenge.top5
+    100534: Stonehenge.top6
+    100536: Stonehenge.top7
+    100538: //RootNode
+    100540: Texto 1
+    100542: Texto 2
+    100544: Texto 3
+    100546: Texto 4
+    100548: Texto God
+    100550: Texto Sorry
+    100552: Thumb_Down.L
+    100554: Thumb_Down.L_end
+    100556: Thumb_Down.L_end_end
+    100558: Thumb_Down.L_end_end_end
+    100560: Thumb_Down.R
+    100562: Thumb_Down.R_end
+    100564: Thumb_Down.R_end_end
+    100566: Thumb_Down.R_end_end_end
+    100568: Thumb_Up.L
+    100570: Thumb_Up.R
+    100572: Toes.L
+    100574: Toes.L_end
+    100576: Toes.L_end_end
+    100578: Toes.R
+    100580: Toes.R_end
+    100582: Toes.R_end_end
+    100584: Toes_Control.L
+    100586: Toes_Control.L_end
+    100588: Toes_Control.L_end_end
+    100590: Toes_Control.L_end_end_end
+    100592: Toes_Control.R
+    100594: Toes_Control.R_end
+    100596: Toes_Control.R_end_end
+    100598: tree1
+    100600: tree1.016
+    100602: tree1.017
+    100604: tree1.018
+    100606: tree10
+    100608: tree11
+    100610: tree12
+    100612: tree13
+    100614: tree14
+    100616: tree15
+    100618: tree16
+    100620: tree17
+    100622: tree18
+    100624: tree19
+    100626: tree2
+    100628: tree20
+    100630: tree21
+    100632: tree22
+    100634: tree23
+    100636: tree24
+    100638: tree25
+    100640: tree26
+    100642: tree27
+    100644: tree28
+    100646: tree29
+    100648: tree3
+    100650: tree3.001
+    100652: tree3.004
+    100654: tree3.021
+    100656: tree30
+    100658: tree31
+    100660: tree32
+    100662: tree33
+    100664: tree34
+    100666: tree35
+    100668: tree36
+    100670: tree37
+    100672: tree38
+    100674: tree39
+    100676: tree4
+    100678: tree4.000
+    100680: tree5
+    100682: tree6
+    100684: tree7
+    100686: tree8
+    100688: tree9
+    100690: Volcano
+    400000: Arm_Down.L
+    400002: Arm_Down.R
+    400004: Arm_Up.L
+    400006: Arm_Up.R
+    400008: Back
+    400010: Bush.3.M.002
+    400012: Bush.4.S.003
+    400014: Bush1
+    400016: Bush2
+    400018: Bush3
+    400020: Bush4
+    400022: Bush5
+    400024: Bush6
+    400026: Bush7
+    400028: Bush8
+    400030: Bush9
+    400032: Butt
+    400034: Cacti1
+    400036: Cacti2
+    400038: Cacti3
+    400040: Cacti4
+    400042: Cacti5
+    400044: Cacti6
+    400046: Cacti7
+    400048: Cacti8
+    400050: Cacti9
+    400052: Cave Spikes
+    400054: Character_example
+    400056: Cloud 1
+    400058: Cloud 1.001
+    400060: Cloud 10
+    400062: Cloud 11
+    400064: Cloud 11.001
+    400066: Cloud 12
+    400068: Cloud 13
+    400070: Cloud 14
+    400072: Cloud 15
+    400074: Cloud 16
+    400076: Cloud 17
+    400078: Cloud 18
+    400080: Cloud 18.001
+    400082: Cloud 19
+    400084: Cloud 2
+    400086: Cloud 20
+    400088: Cloud 20.001
+    400090: Cloud 21
+    400092: Cloud 21.001
+    400094: Cloud 22
+    400096: Cloud 3
+    400098: Cloud 3.001
+    400100: Cloud 4
+    400102: Cloud 5
+    400104: Cloud 6
+    400106: Cloud 7
+    400108: Cloud 8
+    400110: Cloud 9
+    400112: Colosso
+    400114: Colosso.001
+    400116: Colosso_mask
+    400118: Cube.009
+    400120: Elevator1
+    400122: Elevator2
+    400124: Elevator3
+    400126: Elevator4
+    400128: Fingers_Down.L
+    400130: Fingers_Down.L_end
+    400132: Fingers_Down.L_end_end
+    400134: Fingers_Down.L_end_end_end
+    400136: Fingers_Down.R
+    400138: Fingers_Down.R_end
+    400140: Fingers_Down.R_end_end
+    400142: Fingers_Down.R_end_end_end
+    400144: Fingers_Up.L
+    400146: Fingers_Up.R
+    400148: Foot.L
+    400150: Foot.R
+    400152: Foot_Roll.L
+    400154: Foot_Roll.R
+    400156: Grass.000
+    400158: Grass.001
+    400160: Grass.002
+    400162: Grass.003
+    400164: Grass.004
+    400166: Grass.005
+    400168: Grass.006
+    400170: Grass.007
+    400172: Grass.008
+    400174: Grass.009
+    400176: Grass.011
+    400178: Grass.012
+    400180: Grass.013
+    400182: Grass.014
+    400184: Grass.015
+    400186: Grass.016
+    400188: Grass.017
+    400190: Grass.018
+    400192: Grass.019
+    400194: Grass.020
+    400196: Grass.021
+    400198: Grass.022
+    400200: Grass.023
+    400202: Grass.024
+    400204: Grass.025
+    400206: Grass.026
+    400208: Grass.027
+    400210: Grass.028
+    400212: Grass.029
+    400214: Grass.030
+    400216: Grass.032
+    400218: Grass.033
+    400220: Grass.036
+    400222: Grass.037
+    400224: Grass.038
+    400226: Grass.039
+    400228: Grass.040
+    400230: Grass.041
+    400232: Grass.042
+    400234: Grass.043
+    400236: Grass.044
+    400238: Grass.045
+    400240: Grass.046
+    400242: Grass.047
+    400244: Grass.048
+    400246: Grass.049
+    400248: Grass.050
+    400250: Grass.051
+    400252: Grass.052
+    400254: Grass.054
+    400256: Grass.055
+    400258: Grass.056
+    400260: Grass.058
+    400262: Grass.060
+    400264: Grass.105
+    400266: Grass.61
+    400268: Hand.L
+    400270: Hand.R
+    400272: Head
+    400274: Head_end
+    400276: Head_end_end
+    400278: Island Bottom
+    400280: Island Top
+    400282: Lava1
+    400284: Lava10
+    400286: Lava11
+    400288: Lava12
+    400290: Lava13
+    400292: Lava2
+    400294: Lava3
+    400296: Lava4
+    400298: Lava5
+    400300: Lava6
+    400302: Lava7
+    400304: Lava8
+    400306: Lava9
+    400308: Leg_Control.L
+    400310: Leg_Control.R
+    400312: Leg_Down.L
+    400314: Leg_Down.L_end
+    400316: Leg_Down.L_end_end
+    400318: Leg_Down.R
+    400320: Leg_Down.R_end
+    400322: Leg_Down.R_end_end
+    400324: Leg_IK.L
+    400326: Leg_IK.L_end
+    400328: Leg_IK.L_end_end
+    400330: Leg_IK.R
+    400332: Leg_IK.R_end
+    400334: Leg_IK.R_end_end
+    400336: Leg_IK.R_end_end_end
+    400338: Leg_Poletarget.L
+    400340: Leg_Poletarget.L_end
+    400342: Leg_Poletarget.L_end_end
+    400344: Leg_Poletarget.R
+    400346: Leg_Poletarget.R_end
+    400348: Leg_Poletarget.R_end_end
+    400350: Leg_Up.L
+    400352: Leg_Up.R
+    400354: Mountain.1
+    400356: Mountain.2
+    400358: Mountain.3
+    400360: Mountain.4
+    400362: Mountain.5
+    400364: Mountain.Base
+    400366: Neck
+    400368: Placa 1
+    400370: Placa 2
+    400372: Placa 3
+    400374: Placa 4
+    400376: Placa God
+    400378: Placa Sorry
+    400380: Platform.000
+    400382: Platform.005
+    400384: Platform.006
+    400386: Platform.007
+    400388: Platform.1
+    400390: Platform.2
+    400392: Platform.3
+    400394: Platform.4
+    400396: Rock1
+    400398: Rock10
+    400400: Rock10.004
+    400402: Rock10.005
+    400404: Rock10.006
+    400406: Rock10.007
+    400408: Rock10.008
+    400410: Rock11
+    400412: Rock12
+    400414: Rock13
+    400416: Rock14
+    400418: Rock14.003
+    400420: Rock14.004
+    400422: Rock15
+    400424: Rock16
+    400426: Rock16.001
+    400428: Rock16.002
+    400430: Rock17
+    400432: Rock17.001
+    400434: Rock18
+    400436: Rock19
+    400438: Rock2
+    400440: Rock2.004
+    400442: Rock2.005
+    400444: Rock20
+    400446: Rock21
+    400448: Rock22
+    400450: Rock23
+    400452: Rock24
+    400454: Rock25
+    400456: Rock26
+    400458: Rock27
+    400460: Rock28
+    400462: Rock29
+    400464: Rock3
+    400466: Rock30
+    400468: Rock31
+    400470: Rock32
+    400472: Rock33
+    400474: Rock34
+    400476: Rock35
+    400478: Rock4
+    400480: Rock5
+    400482: Rock6
+    400484: Rock7
+    400486: Rock8
+    400488: Rock8.004
+    400490: Rock8.005
+    400492: Rock8.006
+    400494: Rock8.007
+    400496: Rock9
+    400498: Rock9.004
+    400500: Rock9.005
+    400502: Rock9.006
+    400504: Root
+    400506: Stonehenge.base
+    400508: Stonehenge.bottom1
+    400510: Stonehenge.bottom2
+    400512: Stonehenge.bottom3
+    400514: Stonehenge.bottom4
+    400516: Stonehenge.bottom5
+    400518: Stonehenge.bottom6
+    400520: Stonehenge.bottom7
+    400522: Stonehenge.top1
+    400524: Stonehenge.top2
+    400526: Stonehenge.top3
+    400528: Stonehenge.top4
+    400530: Stonehenge.top4.001
+    400532: Stonehenge.top5
+    400534: Stonehenge.top6
+    400536: Stonehenge.top7
+    400538: //RootNode
+    400540: Texto 1
+    400542: Texto 2
+    400544: Texto 3
+    400546: Texto 4
+    400548: Texto God
+    400550: Texto Sorry
+    400552: Thumb_Down.L
+    400554: Thumb_Down.L_end
+    400556: Thumb_Down.L_end_end
+    400558: Thumb_Down.L_end_end_end
+    400560: Thumb_Down.R
+    400562: Thumb_Down.R_end
+    400564: Thumb_Down.R_end_end
+    400566: Thumb_Down.R_end_end_end
+    400568: Thumb_Up.L
+    400570: Thumb_Up.R
+    400572: Toes.L
+    400574: Toes.L_end
+    400576: Toes.L_end_end
+    400578: Toes.R
+    400580: Toes.R_end
+    400582: Toes.R_end_end
+    400584: Toes_Control.L
+    400586: Toes_Control.L_end
+    400588: Toes_Control.L_end_end
+    400590: Toes_Control.L_end_end_end
+    400592: Toes_Control.R
+    400594: Toes_Control.R_end
+    400596: Toes_Control.R_end_end
+    400598: tree1
+    400600: tree1.016
+    400602: tree1.017
+    400604: tree1.018
+    400606: tree10
+    400608: tree11
+    400610: tree12
+    400612: tree13
+    400614: tree14
+    400616: tree15
+    400618: tree16
+    400620: tree17
+    400622: tree18
+    400624: tree19
+    400626: tree2
+    400628: tree20
+    400630: tree21
+    400632: tree22
+    400634: tree23
+    400636: tree24
+    400638: tree25
+    400640: tree26
+    400642: tree27
+    400644: tree28
+    400646: tree29
+    400648: tree3
+    400650: tree3.001
+    400652: tree3.004
+    400654: tree3.021
+    400656: tree30
+    400658: tree31
+    400660: tree32
+    400662: tree33
+    400664: tree34
+    400666: tree35
+    400668: tree36
+    400670: tree37
+    400672: tree38
+    400674: tree39
+    400676: tree4
+    400678: tree4.000
+    400680: tree5
+    400682: tree6
+    400684: tree7
+    400686: tree8
+    400688: tree9
+    400690: Volcano
+    2300000: Bush.3.M.002
+    2300002: Bush.4.S.003
+    2300004: Bush1
+    2300006: Bush2
+    2300008: Bush3
+    2300010: Bush4
+    2300012: Bush5
+    2300014: Bush6
+    2300016: Bush7
+    2300018: Bush8
+    2300020: Bush9
+    2300022: Cacti1
+    2300024: Cacti2
+    2300026: Cacti3
+    2300028: Cacti4
+    2300030: Cacti5
+    2300032: Cacti6
+    2300034: Cacti7
+    2300036: Cacti8
+    2300038: Cacti9
+    2300040: Cave Spikes
+    2300042: Character_example
+    2300044: Cloud 1
+    2300046: Cloud 1.001
+    2300048: Cloud 10
+    2300050: Cloud 11
+    2300052: Cloud 11.001
+    2300054: Cloud 12
+    2300056: Cloud 13
+    2300058: Cloud 14
+    2300060: Cloud 15
+    2300062: Cloud 16
+    2300064: Cloud 17
+    2300066: Cloud 18
+    2300068: Cloud 18.001
+    2300070: Cloud 19
+    2300072: Cloud 2
+    2300074: Cloud 20
+    2300076: Cloud 20.001
+    2300078: Cloud 21
+    2300080: Cloud 21.001
+    2300082: Cloud 22
+    2300084: Cloud 3
+    2300086: Cloud 3.001
+    2300088: Cloud 4
+    2300090: Cloud 5
+    2300092: Cloud 6
+    2300094: Cloud 7
+    2300096: Cloud 8
+    2300098: Cloud 9
+    2300100: Cube.009
+    2300102: Elevator1
+    2300104: Elevator2
+    2300106: Elevator3
+    2300108: Elevator4
+    2300110: Grass.000
+    2300112: Grass.001
+    2300114: Grass.002
+    2300116: Grass.003
+    2300118: Grass.004
+    2300120: Grass.005
+    2300122: Grass.006
+    2300124: Grass.007
+    2300126: Grass.008
+    2300128: Grass.009
+    2300130: Grass.011
+    2300132: Grass.012
+    2300134: Grass.013
+    2300136: Grass.014
+    2300138: Grass.015
+    2300140: Grass.016
+    2300142: Grass.017
+    2300144: Grass.018
+    2300146: Grass.019
+    2300148: Grass.020
+    2300150: Grass.021
+    2300152: Grass.022
+    2300154: Grass.023
+    2300156: Grass.024
+    2300158: Grass.025
+    2300160: Grass.026
+    2300162: Grass.027
+    2300164: Grass.028
+    2300166: Grass.029
+    2300168: Grass.030
+    2300170: Grass.032
+    2300172: Grass.033
+    2300174: Grass.036
+    2300176: Grass.037
+    2300178: Grass.038
+    2300180: Grass.039
+    2300182: Grass.040
+    2300184: Grass.041
+    2300186: Grass.042
+    2300188: Grass.043
+    2300190: Grass.044
+    2300192: Grass.045
+    2300194: Grass.046
+    2300196: Grass.047
+    2300198: Grass.048
+    2300200: Grass.049
+    2300202: Grass.050
+    2300204: Grass.051
+    2300206: Grass.052
+    2300208: Grass.054
+    2300210: Grass.055
+    2300212: Grass.056
+    2300214: Grass.058
+    2300216: Grass.060
+    2300218: Grass.105
+    2300220: Grass.61
+    2300222: Island Bottom
+    2300224: Island Top
+    2300226: Lava1
+    2300228: Lava10
+    2300230: Lava11
+    2300232: Lava12
+    2300234: Lava13
+    2300236: Lava2
+    2300238: Lava3
+    2300240: Lava4
+    2300242: Lava5
+    2300244: Lava6
+    2300246: Lava7
+    2300248: Lava8
+    2300250: Lava9
+    2300252: Mountain.1
+    2300254: Mountain.2
+    2300256: Mountain.3
+    2300258: Mountain.4
+    2300260: Mountain.5
+    2300262: Mountain.Base
+    2300264: Placa 1
+    2300266: Placa 2
+    2300268: Placa 3
+    2300270: Placa 4
+    2300272: Placa God
+    2300274: Placa Sorry
+    2300276: Platform.000
+    2300278: Platform.005
+    2300280: Platform.006
+    2300282: Platform.007
+    2300284: Platform.1
+    2300286: Platform.2
+    2300288: Platform.3
+    2300290: Platform.4
+    2300292: Rock1
+    2300294: Rock10
+    2300296: Rock10.004
+    2300298: Rock10.005
+    2300300: Rock10.006
+    2300302: Rock10.007
+    2300304: Rock10.008
+    2300306: Rock11
+    2300308: Rock12
+    2300310: Rock13
+    2300312: Rock14
+    2300314: Rock14.003
+    2300316: Rock14.004
+    2300318: Rock15
+    2300320: Rock16
+    2300322: Rock16.001
+    2300324: Rock16.002
+    2300326: Rock17
+    2300328: Rock17.001
+    2300330: Rock18
+    2300332: Rock19
+    2300334: Rock2
+    2300336: Rock2.004
+    2300338: Rock2.005
+    2300340: Rock20
+    2300342: Rock21
+    2300344: Rock22
+    2300346: Rock23
+    2300348: Rock24
+    2300350: Rock25
+    2300352: Rock26
+    2300354: Rock27
+    2300356: Rock28
+    2300358: Rock29
+    2300360: Rock3
+    2300362: Rock30
+    2300364: Rock31
+    2300366: Rock32
+    2300368: Rock33
+    2300370: Rock34
+    2300372: Rock35
+    2300374: Rock4
+    2300376: Rock5
+    2300378: Rock6
+    2300380: Rock7
+    2300382: Rock8
+    2300384: Rock8.004
+    2300386: Rock8.005
+    2300388: Rock8.006
+    2300390: Rock8.007
+    2300392: Rock9
+    2300394: Rock9.004
+    2300396: Rock9.005
+    2300398: Rock9.006
+    2300400: Stonehenge.base
+    2300402: Stonehenge.bottom1
+    2300404: Stonehenge.bottom2
+    2300406: Stonehenge.bottom3
+    2300408: Stonehenge.bottom4
+    2300410: Stonehenge.bottom5
+    2300412: Stonehenge.bottom6
+    2300414: Stonehenge.bottom7
+    2300416: Stonehenge.top1
+    2300418: Stonehenge.top2
+    2300420: Stonehenge.top3
+    2300422: Stonehenge.top4
+    2300424: Stonehenge.top4.001
+    2300426: Stonehenge.top5
+    2300428: Stonehenge.top6
+    2300430: Stonehenge.top7
+    2300432: Texto 1
+    2300434: Texto 2
+    2300436: Texto 3
+    2300438: Texto 4
+    2300440: Texto God
+    2300442: Texto Sorry
+    2300444: tree1
+    2300446: tree1.016
+    2300448: tree1.017
+    2300450: tree1.018
+    2300452: tree10
+    2300454: tree11
+    2300456: tree12
+    2300458: tree13
+    2300460: tree14
+    2300462: tree15
+    2300464: tree16
+    2300466: tree17
+    2300468: tree18
+    2300470: tree19
+    2300472: tree2
+    2300474: tree20
+    2300476: tree21
+    2300478: tree22
+    2300480: tree23
+    2300482: tree24
+    2300484: tree25
+    2300486: tree26
+    2300488: tree27
+    2300490: tree28
+    2300492: tree29
+    2300494: tree3
+    2300496: tree3.001
+    2300498: tree3.004
+    2300500: tree3.021
+    2300502: tree30
+    2300504: tree31
+    2300506: tree32
+    2300508: tree33
+    2300510: tree34
+    2300512: tree35
+    2300514: tree36
+    2300516: tree37
+    2300518: tree38
+    2300520: tree39
+    2300522: tree4
+    2300524: tree4.000
+    2300526: tree5
+    2300528: tree6
+    2300530: tree7
+    2300532: tree8
+    2300534: tree9
+    2300536: Volcano
+    3300000: Bush.3.M.002
+    3300002: Bush.4.S.003
+    3300004: Bush1
+    3300006: Bush2
+    3300008: Bush3
+    3300010: Bush4
+    3300012: Bush5
+    3300014: Bush6
+    3300016: Bush7
+    3300018: Bush8
+    3300020: Bush9
+    3300022: Cacti1
+    3300024: Cacti2
+    3300026: Cacti3
+    3300028: Cacti4
+    3300030: Cacti5
+    3300032: Cacti6
+    3300034: Cacti7
+    3300036: Cacti8
+    3300038: Cacti9
+    3300040: Cave Spikes
+    3300042: Character_example
+    3300044: Cloud 1
+    3300046: Cloud 1.001
+    3300048: Cloud 10
+    3300050: Cloud 11
+    3300052: Cloud 11.001
+    3300054: Cloud 12
+    3300056: Cloud 13
+    3300058: Cloud 14
+    3300060: Cloud 15
+    3300062: Cloud 16
+    3300064: Cloud 17
+    3300066: Cloud 18
+    3300068: Cloud 18.001
+    3300070: Cloud 19
+    3300072: Cloud 2
+    3300074: Cloud 20
+    3300076: Cloud 20.001
+    3300078: Cloud 21
+    3300080: Cloud 21.001
+    3300082: Cloud 22
+    3300084: Cloud 3
+    3300086: Cloud 3.001
+    3300088: Cloud 4
+    3300090: Cloud 5
+    3300092: Cloud 6
+    3300094: Cloud 7
+    3300096: Cloud 8
+    3300098: Cloud 9
+    3300100: Cube.009
+    3300102: Elevator1
+    3300104: Elevator2
+    3300106: Elevator3
+    3300108: Elevator4
+    3300110: Grass.000
+    3300112: Grass.001
+    3300114: Grass.002
+    3300116: Grass.003
+    3300118: Grass.004
+    3300120: Grass.005
+    3300122: Grass.006
+    3300124: Grass.007
+    3300126: Grass.008
+    3300128: Grass.009
+    3300130: Grass.011
+    3300132: Grass.012
+    3300134: Grass.013
+    3300136: Grass.014
+    3300138: Grass.015
+    3300140: Grass.016
+    3300142: Grass.017
+    3300144: Grass.018
+    3300146: Grass.019
+    3300148: Grass.020
+    3300150: Grass.021
+    3300152: Grass.022
+    3300154: Grass.023
+    3300156: Grass.024
+    3300158: Grass.025
+    3300160: Grass.026
+    3300162: Grass.027
+    3300164: Grass.028
+    3300166: Grass.029
+    3300168: Grass.030
+    3300170: Grass.032
+    3300172: Grass.033
+    3300174: Grass.036
+    3300176: Grass.037
+    3300178: Grass.038
+    3300180: Grass.039
+    3300182: Grass.040
+    3300184: Grass.041
+    3300186: Grass.042
+    3300188: Grass.043
+    3300190: Grass.044
+    3300192: Grass.045
+    3300194: Grass.046
+    3300196: Grass.047
+    3300198: Grass.048
+    3300200: Grass.049
+    3300202: Grass.050
+    3300204: Grass.051
+    3300206: Grass.052
+    3300208: Grass.054
+    3300210: Grass.055
+    3300212: Grass.056
+    3300214: Grass.058
+    3300216: Grass.060
+    3300218: Grass.105
+    3300220: Grass.61
+    3300222: Island Bottom
+    3300224: Island Top
+    3300226: Lava1
+    3300228: Lava10
+    3300230: Lava11
+    3300232: Lava12
+    3300234: Lava13
+    3300236: Lava2
+    3300238: Lava3
+    3300240: Lava4
+    3300242: Lava5
+    3300244: Lava6
+    3300246: Lava7
+    3300248: Lava8
+    3300250: Lava9
+    3300252: Mountain.1
+    3300254: Mountain.2
+    3300256: Mountain.3
+    3300258: Mountain.4
+    3300260: Mountain.5
+    3300262: Mountain.Base
+    3300264: Placa 1
+    3300266: Placa 2
+    3300268: Placa 3
+    3300270: Placa 4
+    3300272: Placa God
+    3300274: Placa Sorry
+    3300276: Platform.000
+    3300278: Platform.005
+    3300280: Platform.006
+    3300282: Platform.007
+    3300284: Platform.1
+    3300286: Platform.2
+    3300288: Platform.3
+    3300290: Platform.4
+    3300292: Rock1
+    3300294: Rock10
+    3300296: Rock10.004
+    3300298: Rock10.005
+    3300300: Rock10.006
+    3300302: Rock10.007
+    3300304: Rock10.008
+    3300306: Rock11
+    3300308: Rock12
+    3300310: Rock13
+    3300312: Rock14
+    3300314: Rock14.003
+    3300316: Rock14.004
+    3300318: Rock15
+    3300320: Rock16
+    3300322: Rock16.001
+    3300324: Rock16.002
+    3300326: Rock17
+    3300328: Rock17.001
+    3300330: Rock18
+    3300332: Rock19
+    3300334: Rock2
+    3300336: Rock2.004
+    3300338: Rock2.005
+    3300340: Rock20
+    3300342: Rock21
+    3300344: Rock22
+    3300346: Rock23
+    3300348: Rock24
+    3300350: Rock25
+    3300352: Rock26
+    3300354: Rock27
+    3300356: Rock28
+    3300358: Rock29
+    3300360: Rock3
+    3300362: Rock30
+    3300364: Rock31
+    3300366: Rock32
+    3300368: Rock33
+    3300370: Rock34
+    3300372: Rock35
+    3300374: Rock4
+    3300376: Rock5
+    3300378: Rock6
+    3300380: Rock7
+    3300382: Rock8
+    3300384: Rock8.004
+    3300386: Rock8.005
+    3300388: Rock8.006
+    3300390: Rock8.007
+    3300392: Rock9
+    3300394: Rock9.004
+    3300396: Rock9.005
+    3300398: Rock9.006
+    3300400: Stonehenge.base
+    3300402: Stonehenge.bottom1
+    3300404: Stonehenge.bottom2
+    3300406: Stonehenge.bottom3
+    3300408: Stonehenge.bottom4
+    3300410: Stonehenge.bottom5
+    3300412: Stonehenge.bottom6
+    3300414: Stonehenge.bottom7
+    3300416: Stonehenge.top1
+    3300418: Stonehenge.top2
+    3300420: Stonehenge.top3
+    3300422: Stonehenge.top4
+    3300424: Stonehenge.top4.001
+    3300426: Stonehenge.top5
+    3300428: Stonehenge.top6
+    3300430: Stonehenge.top7
+    3300432: Texto 1
+    3300434: Texto 2
+    3300436: Texto 3
+    3300438: Texto 4
+    3300440: Texto God
+    3300442: Texto Sorry
+    3300444: tree1
+    3300446: tree1.016
+    3300448: tree1.017
+    3300450: tree1.018
+    3300452: tree10
+    3300454: tree11
+    3300456: tree12
+    3300458: tree13
+    3300460: tree14
+    3300462: tree15
+    3300464: tree16
+    3300466: tree17
+    3300468: tree18
+    3300470: tree19
+    3300472: tree2
+    3300474: tree20
+    3300476: tree21
+    3300478: tree22
+    3300480: tree23
+    3300482: tree24
+    3300484: tree25
+    3300486: tree26
+    3300488: tree27
+    3300490: tree28
+    3300492: tree29
+    3300494: tree3
+    3300496: tree3.001
+    3300498: tree3.004
+    3300500: tree3.021
+    3300502: tree30
+    3300504: tree31
+    3300506: tree32
+    3300508: tree33
+    3300510: tree34
+    3300512: tree35
+    3300514: tree36
+    3300516: tree37
+    3300518: tree38
+    3300520: tree39
+    3300522: tree4
+    3300524: tree4.000
+    3300526: tree5
+    3300528: tree6
+    3300530: tree7
+    3300532: tree8
+    3300534: tree9
+    3300536: Volcano
+    4300000: Texto 4
+    4300002: Placa 3
+    4300004: Placa 4
+    4300006: Texto 3
+    4300008: Texto Sorry
+    4300010: Placa Sorry
+    4300012: Placa God
+    4300014: Texto God
+    4300016: Texto 1
+    4300018: Texto 2
+    4300020: Placa 2
+    4300022: Placa 1
+    4300024: Cloud 1.001
+    4300026: Cloud 3.001
+    4300028: Cloud 18.001
+    4300030: Cloud 21.001
+    4300032: Cloud 11.001
+    4300034: Cloud 20.001
+    4300036: Platform.007
+    4300038: Platform.006
+    4300040: Platform.005
+    4300042: Platform.000
+    4300044: Grass.105
+    4300046: Grass.000
+    4300048: Grass.001
+    4300050: Grass.002
+    4300052: Grass.004
+    4300054: Grass.007
+    4300056: Grass.008
+    4300058: Grass.014
+    4300060: Grass.015
+    4300062: Grass.017
+    4300064: Grass.018
+    4300066: Grass.020
+    4300068: Grass.021
+    4300070: Grass.022
+    4300072: Grass.023
+    4300074: Grass.024
+    4300076: Grass.026
+    4300078: Grass.027
+    4300080: Grass.029
+    4300082: Grass.030
+    4300084: Grass.032
+    4300086: Grass.033
+    4300088: Grass.036
+    4300090: Grass.037
+    4300092: Grass.038
+    4300094: Rock8.004
+    4300096: Cube.009
+    4300098: tree3.001
+    4300100: Bush.3.M.002
+    4300102: Rock14.003
+    4300104: Rock14.004
+    4300106: Rock9.004
+    4300108: Rock10.004
+    4300110: Rock2.004
+    4300112: Rock2.005
+    4300114: tree4.000
+    4300116: Rock9.005
+    4300118: tree1.016
+    4300120: tree3.004
+    4300122: tree1.017
+    4300124: tree3.021
+    4300126: Bush.4.S.003
+    4300128: Grass.039
+    4300130: Grass.040
+    4300132: Grass.041
+    4300134: Grass.042
+    4300136: Grass.043
+    4300138: Grass.044
+    4300140: Grass.045
+    4300142: Grass.046
+    4300144: Grass.047
+    4300146: Grass.048
+    4300148: Grass.049
+    4300150: Grass.050
+    4300152: Grass.051
+    4300154: Grass.052
+    4300156: Rock16.001
+    4300158: Grass.054
+    4300160: Grass.055
+    4300162: Grass.056
+    4300164: Grass.058
+    4300166: tree1.018
+    4300168: Rock8.005
+    4300170: Rock10.005
+    4300172: Grass.060
+    4300174: Rock10.006
+    4300176: Rock8.006
+    4300178: Rock16.002
+    4300180: Grass.003
+    4300182: Grass.005
+    4300184: Grass.006
+    4300186: Grass.009
+    4300188: Grass.61
+    4300190: Grass.011
+    4300192: Grass.012
+    4300194: Rock10.007
+    4300196: Rock8.007
+    4300198: Rock9.006
+    4300200: Rock10.008
+    4300202: Rock17.001
+    4300204: Grass.013
+    4300206: Grass.016
+    4300208: Grass.019
+    4300210: Grass.025
+    4300212: Grass.028
+    4300214: Stonehenge.top4.001
+    4300216: Lava4
+    4300218: Lava5
+    4300220: Lava6
+    4300222: Lava1
+    4300224: Lava2
+    4300226: Lava3
+    4300228: Lava7
+    4300230: Lava8
+    4300232: Lava12
+    4300234: Lava9
+    4300236: Lava10
+    4300238: Lava11
+    4300240: Lava13
+    4300242: Elevator4
+    4300244: Elevator3
+    4300246: Elevator2
+    4300248: Platform.4
+    4300250: Platform.3
+    4300252: Platform.1
+    4300254: Platform.2
+    4300256: Cloud 15
+    4300258: Cloud 14
+    4300260: Cloud 20
+    4300262: Cloud 22
+    4300264: Cloud 10
+    4300266: Cloud 11
+    4300268: Cloud 21
+    4300270: Cloud 19
+    4300272: Cloud 18
+    4300274: Cloud 12
+    4300276: Cloud 17
+    4300278: Cloud 16
+    4300280: Cloud 13
+    4300282: Cloud 2
+    4300284: Cloud 3
+    4300286: Cloud 1
+    4300288: Cloud 4
+    4300290: Cloud 5
+    4300292: Cloud 6
+    4300294: Cloud 7
+    4300296: Cloud 8
+    4300298: Cloud 9
+    4300300: Elevator1
+    4300302: Volcano
+    4300304: Rock25
+    4300306: Rock29
+    4300308: Rock28
+    4300310: Rock18
+    4300312: Rock26
+    4300314: Rock23
+    4300316: Rock24
+    4300318: Rock35
+    4300320: Rock22
+    4300322: Rock34
+    4300324: Bush2
+    4300326: Bush8
+    4300328: Bush5
+    4300330: Bush3
+    4300332: Bush4
+    4300334: Cacti9
+    4300336: Cacti7
+    4300338: Bush6
+    4300340: Bush7
+    4300342: Bush9
+    4300344: Bush1
+    4300346: tree1
+    4300348: tree2
+    4300350: tree4
+    4300352: tree3
+    4300354: Island Bottom
+    4300356: Cave Spikes
+    4300358: tree23
+    4300360: tree30
+    4300362: tree14
+    4300364: tree18
+    4300366: tree15
+    4300368: tree19
+    4300370: Colosso
+    4300372: Colosso_mask
+    4300374: tree20
+    4300376: tree5
+    4300378: tree35
+    4300380: tree21
+    4300382: tree26
+    4300384: tree16
+    4300386: tree22
+    4300388: tree36
+    4300390: tree9
+    4300392: tree8
+    4300394: tree7
+    4300396: tree27
+    4300398: tree11
+    4300400: tree39
+    4300402: tree12
+    4300404: tree10
+    4300406: tree17
+    4300408: tree37
+    4300410: tree25
+    4300412: tree38
+    4300414: tree28
+    4300416: tree13
+    4300418: tree6
+    4300420: tree34
+    4300422: tree29
+    4300424: tree33
+    4300426: tree32
+    4300428: tree24
+    4300430: tree31
+    4300432: Stonehenge.base
+    4300434: Stonehenge.top1
+    4300436: Stonehenge.top2
+    4300438: Stonehenge.top3
+    4300440: Stonehenge.top4
+    4300442: Stonehenge.top5
+    4300444: Stonehenge.top7
+    4300446: Stonehenge.top6
+    4300448: Stonehenge.bottom1
+    4300450: Stonehenge.bottom2
+    4300452: Stonehenge.bottom3
+    4300454: Stonehenge.bottom4
+    4300456: Stonehenge.bottom5
+    4300458: Stonehenge.bottom6
+    4300460: Stonehenge.bottom7
+    4300462: Cacti6
+    4300464: Cacti5
+    4300466: Cacti2
+    4300468: Cacti4
+    4300470: Cacti3
+    4300472: Cacti8
+    4300474: Cacti1
+    4300476: Rock27
+    4300478: Rock30
+    4300480: Rock32
+    4300482: Rock21
+    4300484: Rock19
+    4300486: Rock31
+    4300488: Rock33
+    4300490: Rock17
+    4300492: Rock16
+    4300494: Rock15
+    4300496: Rock14
+    4300498: Rock13
+    4300500: Rock20
+    4300502: Rock12
+    4300504: Rock11
+    4300506: Rock9
+    4300508: Rock8
+    4300510: Rock10
+    4300512: Rock1
+    4300514: Rock2
+    4300516: Rock5
+    4300518: Rock6
+    4300520: Rock7
+    4300522: Rock3
+    4300524: Rock4
+    4300526: Mountain.3
+    4300528: Mountain.5
+    4300530: Mountain.4
+    4300532: Character_example
+    4300534: Mountain.2
+    4300536: Mountain.Base
+    4300538: Mountain.1
+    4300540: Island Top
+    9500000: //RootNode
+    13700000: Colosso
+    13700002: Colosso_mask
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
