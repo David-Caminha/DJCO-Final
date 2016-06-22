@@ -37,9 +37,25 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private AudioClip[] m_RightFootstepSounds; // an array of footstep sounds that will be randomly selected from.
     [SerializeField]
-    private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
+    private AudioClip m_JumpSound; // the sound played when character leaves the ground.
     [SerializeField]
-    private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+    private AudioClip m_LandSound; // the sound played when character touches back on ground.
+    [SerializeField]
+    private AudioClip m_Swing0Sound; // the sound played when character attacks at state 0.
+    [SerializeField]
+    private AudioClip m_Swing1Sound; // the sound played when character attacks at state 1.
+    [SerializeField]
+    private AudioClip m_Swing2Sound; // the sound played when character attacks at state 2.
+    [SerializeField]
+    private AudioClip m_Swing3Sound; // the sound played when character attacks at state 3.
+    [SerializeField]
+    private AudioClip m_FreezeSound; // the sound played when character uses freeze.
+    [SerializeField]
+    private AudioClip m_ReviveSound; // the sound played when character uses freeze.
+    [SerializeField]
+    private AudioClip m_DeathSound; // the sound played when character uses freeze.
+    [SerializeField]
+    private AudioClip m_DeathByFallSound; // the sound played when character uses freeze.
     [SerializeField]
     private Transform groundCheck;
     [SerializeField]
@@ -109,14 +125,15 @@ public class ThirdPersonController : MonoBehaviour
         m_attackTimeOut = 2.5f;
         m_Dying = false;
         m_Die = false;
-        m_Revive = false;
+        m_Revive = true;
+        Invoke("PlayReviveSound", 0.7f);
     }
 
 
     // Update is called once per frame
     private void Update()
     {
-       
+
         //States verification
         if (dyingFromFall)
         {
@@ -145,39 +162,38 @@ public class ThirdPersonController : MonoBehaviour
             var newScale = new Vector3(2, 2, 2);
             transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
             time += Time.deltaTime;
-            if (time >= 5)
+            if (time >= 1.9f)
             {
-                Invoke("Ungrow", 2.0f);
+                Invoke("Ungrow", 5.0f);
                 m_Growing = false;
                 time = 0;
-                
             }
             return;
         }
-        if(m_UnGrowing)
+        if (m_UnGrowing)
         {
-            var newScale = new Vector3(0.5f, 0.5f, 0.5f);
+            var newScale = new Vector3(1f, 1f, 1f);
             transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
             time += Time.deltaTime;
-            if (time >= 10)
+            if (time >= 1)
                 m_UnGrowing = false;
             return;
         }
-        if(m_Teleporting)
+        if (m_Teleporting)
         {
-            
+
             m_CharacterController.enabled = false;
             transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
             time += Time.deltaTime;
             if (time >= 0.5)
-            { 
+            {
                 m_Teleporting = false;
                 m_CharacterController.enabled = true;
             }
             return;
         }
         if (m_UnTeleporting)
-        {      
+        {
             transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
             time += Time.deltaTime;
             if (time >= 0.5)
@@ -193,7 +209,7 @@ public class ThirdPersonController : MonoBehaviour
         if (m_attackTimeOut >= 0)
             m_attackTimeOut -= Time.deltaTime;
         else
-            m_attackState = 0;
+            m_attackState = 3;
         RotateView();
 
         // State readings for animations
@@ -204,21 +220,25 @@ public class ThirdPersonController : MonoBehaviour
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             m_Frenzy = Input.GetKey(KeyCode.Alpha1);
             if (m_Frenzy)
-            { 
+            {
                 m_Growing = true;
                 time = 0;
             }
             m_Freeze = Input.GetKey(KeyCode.Alpha2);
-            m_Teleport = Input.GetKey(KeyCode.Alpha3);
-            if(m_Teleport)
+            if (m_Freeze)
             {
-                Instantiate(teleportA, transform.position+new Vector3(0,0.5f,0), Quaternion.Euler(-90, 0, 0));
+                Invoke("PlayFreezeSound", 0.5f);
+            }
+            m_Teleport = Input.GetKey(KeyCode.Alpha3);
+            if (m_Teleport)
+            {
+                Instantiate(teleportA, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(-90, 0, 0));
                 teleportNewPosition = transform.position + new Vector3(0, -26, 0);
                 m_Teleporting = true;
                 return;
             }
             m_UnTeleport = Input.GetKey(KeyCode.Alpha5);
-            if(m_UnTeleport)
+            if (m_UnTeleport)
             {
                 m_CharacterController.enabled = false;
                 Instantiate(teleportB, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
@@ -255,11 +275,58 @@ public class ThirdPersonController : MonoBehaviour
         m_NextStep = m_StepCycle + .5f;
     }
 
+    private void PlaySwingSound(int state)
+    {
+        switch (state)
+        {
+            case 0:
+                m_AudioSource.clip = m_Swing0Sound;
+                break;
+            case 1:
+                m_AudioSource.clip = m_Swing1Sound;
+                break;
+            case 2:
+                m_AudioSource.clip = m_Swing2Sound;
+                break;
+        }
+        m_AudioSource.Play();
+    }
+
+    private void PlayThirdSwingSound()
+    {
+        m_AudioSource.clip = m_Swing3Sound;
+        m_AudioSource.Play();
+    }
+
+    private void PlayFreezeSound()
+    {
+        m_AudioSource.clip = m_FreezeSound;
+        m_AudioSource.Play();
+    }
+
+    private void PlayReviveSound()
+    {
+        m_AudioSource.clip = m_ReviveSound;
+        m_AudioSource.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        m_AudioSource.clip = m_DeathSound;
+        m_AudioSource.Play();
+    }
+
+    private void PlayDeathByFallSound()
+    {
+        m_AudioSource.clip = m_DeathByFallSound;
+        m_AudioSource.Play();
+    }
+
 
     private void FixedUpdate()
     {
         //State verifications
-        if(dyingFromFall)
+        if (dyingFromFall)
         {
             m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             return;
@@ -324,22 +391,31 @@ public class ThirdPersonController : MonoBehaviour
         {
             case 0:
                 m_attackTimeOut = 1.5f;
+                PlaySwingSound(1);
                 m_attackState = 1;
                 break;
             case 1:
                 m_attackTimeOut = 1.5f;
+                PlaySwingSound(2);
                 m_attackState = 2;
                 break;
             case 2:
                 m_attackTimeOut = 2.5f;
                 int specialAttack = Random.Range(0, 2);
                 if (specialAttack == 0)
+                {
                     m_attackState = 0;
+                    PlaySwingSound(0);
+                }
                 else
+                {
                     m_attackState = 3;
+                    Invoke("PlayThirdSwingSound", 0.38f);
+                }
                 break;
             case 3:
                 m_attackTimeOut = 1.5f;
+                PlaySwingSound(0);
                 m_attackState = 0;
                 break;
         }
@@ -377,7 +453,7 @@ public class ThirdPersonController : MonoBehaviour
         {
             return;
         }
-        if(leftStep)
+        if (leftStep)
         {
             m_AudioSource.clip = m_LeftFootstepSounds[stepIndex];
             leftStep = false;
@@ -469,6 +545,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         dyingFromFall = true;
         m_Camera.transform.parent = null;
+        PlayDeathByFallSound();
         Invoke("FinishFall", 2f);
     }
 

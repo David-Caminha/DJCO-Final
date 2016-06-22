@@ -150,17 +150,11 @@ public class PlayerStats : NetworkBehaviour
         MovementSpeed = 100;
 
         Frozen = false;
-    }
 
-    public override void OnStartLocalPlayer()
-    {
-        thirdPersonController.enabled = true;
-        fpsCamera.gameObject.SetActive(true);
-        audioListener.enabled = true;
-        GetComponent<Freeze>().enabled = true;
-
-        gameObject.name = "LOCAL Player";
-        base.OnStartLocalPlayer();
+        if(isLocalPlayer)
+        {
+            Invoke("StopReviving", 2.4f);
+        }
     }
 
     void ToggleRenderer(bool isAlive)
@@ -185,8 +179,9 @@ public class PlayerStats : NetworkBehaviour
             thirdPersonController.ResetCamera();
             thirdPersonController.m_Dying = false;
             thirdPersonController.m_Revive = true;
+            thirdPersonController.Invoke("PlayReviveSound", 0.7f);
             ToggleControls(true);
-            Invoke("StopReviving", 1.9f);
+            Invoke("StopReviving", 2.1f);
         }
     }
     void StopReviving()
@@ -260,7 +255,6 @@ public class PlayerStats : NetworkBehaviour
 
         if (isLocalPlayer) // Remove controls and Move player to the spawn point
         {
-
             //Transform spawn = NetworkManager.singleton.GetStartPosition();
             transform.position = new Vector3();
             transform.rotation = Quaternion.identity;
@@ -296,6 +290,7 @@ public class PlayerStats : NetworkBehaviour
                     {
                         Invoke("CmdPlayerDeath", 2.58f);
                         thirdPersonController.m_Die = true;
+                        thirdPersonController.PlayDeathSound(); //EM PRINCIPIO ESTA BEM SENAO FAZ UM INVOKE :)
                     }
                 }
             }
