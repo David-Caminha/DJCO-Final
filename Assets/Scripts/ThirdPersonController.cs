@@ -69,9 +69,23 @@ public class ThirdPersonController : MonoBehaviour
     public bool m_Die;
     public bool m_Revive;
 
+    public bool m_Freeze;
+    public bool m_Frenzy;
+    public bool m_Growing;
+    public bool m_UnGrowing;
+    public bool m_Teleport;
+    public bool m_Teleporting;
+    public bool m_UnTeleport;
+    public bool m_UnTeleporting;
+
+    public GameObject teleportA;
+    public GameObject teleportB;
+    Vector3 teleportNewPosition;
+
     private AudioSource m_AudioSource;
     AnimatorStateInfo animState;
 
+    public float time;
     // Use this for initialization
     private void Start()
     {
@@ -97,6 +111,7 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+       
         //States verification
         if (dyingFromFall)
         {
@@ -121,6 +136,53 @@ public class ThirdPersonController : MonoBehaviour
 
         }
 
+        if (m_Growing)
+        {
+            var newScale = new Vector3(2, 2, 2);
+            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
+            time += Time.deltaTime;
+            if (time >= 5)
+            {
+                Invoke("Ungrow", 2.0f);
+                m_Growing = false;
+                time = 0;
+                
+            }
+            return;
+        }
+        if(m_UnGrowing)
+        {
+            var newScale = new Vector3(0.5f, 0.5f, 0.5f);
+            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
+            time += Time.deltaTime;
+            if (time >= 10)
+                m_UnGrowing = false;
+            return;
+        }
+        if(m_Teleporting)
+        {
+            
+            m_CharacterController.enabled = false;
+            transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
+            time += Time.deltaTime;
+            if (time >= 0.5)
+            { 
+                m_Teleporting = false;
+                m_CharacterController.enabled = true;
+            }
+            return;
+        }
+        if (m_UnTeleporting)
+        {      
+            transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
+            time += Time.deltaTime;
+            if (time >= 0.5)
+            {
+                m_UnTeleporting = false;
+                m_CharacterController.enabled = true;
+            }
+            return;
+        }
         //StartUpdate functions
         animState = m_Animator.GetCurrentAnimatorStateInfo(0);
 
@@ -136,6 +198,31 @@ public class ThirdPersonController : MonoBehaviour
             if (!m_Attacking)
                 m_Attack = CrossPlatformInputManager.GetButton("Fire1");
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+            m_Frenzy = Input.GetKey(KeyCode.Alpha1);
+            if (m_Frenzy)
+            { 
+                m_Growing = true;
+                time = 0;
+            }
+            m_Freeze = Input.GetKey(KeyCode.Alpha2);
+            m_Teleport = Input.GetKey(KeyCode.Alpha3);
+            if(m_Teleport)
+            {
+                Instantiate(teleportA, transform.position+new Vector3(0,0.5f,0), Quaternion.Euler(-90, 0, 0));
+                teleportNewPosition = transform.position + new Vector3(0, -26, 0);
+                m_Teleporting = true;
+                return;
+            }
+            m_UnTeleport = Input.GetKey(KeyCode.Alpha5);
+            if(m_UnTeleport)
+            {
+                m_CharacterController.enabled = false;
+                Instantiate(teleportB, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                transform.position = transform.position + new Vector3(0, -26, 0);
+                teleportNewPosition = transform.position + new Vector3(0, 26, 0);
+                m_UnTeleporting = true;
+                return;
+            }
         }
         if (m_Attacking)
         {
@@ -343,6 +430,8 @@ public class ThirdPersonController : MonoBehaviour
         m_Animator.SetBool("Attacking", m_Attacking);
         m_Animator.SetInteger("AttackState", m_attackState);
         m_Animator.SetBool("Dying", m_Dying);
+        m_Animator.SetBool("Frenzy", m_Frenzy);
+        m_Animator.SetBool("Freeze", m_Freeze);
         if (!grounded)
         {
             m_Animator.SetFloat("Jump", m_MoveDir.y);
@@ -384,6 +473,10 @@ public class ThirdPersonController : MonoBehaviour
         m_MouseLook.Init(transform, m_Camera.transform);
     }
 
+    public void Ungrow()
+    {
+        m_UnGrowing = true;
+    }
 
     // Used to add force upon collision between character controller and a rigidbody
     //private void OnControllerColliderHit(ControllerColliderHit hit)
