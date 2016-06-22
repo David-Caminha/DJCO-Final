@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 
 public class PlayerStats : NetworkBehaviour
 {
     //ERRORS ir buscar damage
+
+    public GameObject victoryScreen;
+    public GameObject defeatScreen;
 
     // Basic stats for the character
     [SerializeField]
@@ -189,6 +193,7 @@ public class PlayerStats : NetworkBehaviour
     {
         thirdPersonController.m_Revive = false;
     }
+
     void RemoveFreeze()
     {
         print("Unfreezing");
@@ -301,4 +306,13 @@ public class PlayerStats : NetworkBehaviour
             return;
     }
 
+    public void WinGame()
+    {
+        victoryScreen.SetActive(true);
+    }
+
+    public void LoseGame()
+    {
+        defeatScreen.SetActive(true);
+    }
 }

@@ -33,7 +33,9 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private float m_StepInterval;
     [SerializeField]
-    private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
+    private AudioClip[] m_LeftFootstepSounds; // an array of footstep sounds that will be randomly selected from.
+    [SerializeField]
+    private AudioClip[] m_RightFootstepSounds; // an array of footstep sounds that will be randomly selected from.
     [SerializeField]
     private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
     [SerializeField]
@@ -45,7 +47,8 @@ public class ThirdPersonController : MonoBehaviour
     float groundRadius = 1f;
     bool grounded = false;
 
-
+    private int stepIndex;
+    private bool leftStep;
     private bool dyingFromFall;
     private Animator m_Animator;
     private Camera m_Camera;
@@ -75,7 +78,9 @@ public class ThirdPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        leftStep = false;
         cameraOverview = GameObject.FindGameObjectWithTag("OverviewCamera").transform;
+        stepIndex = 0;
         dyingFromFall = false;
         m_Animator = GetComponent<Animator>();
         m_CharacterController = GetComponent<CharacterController>();
@@ -118,7 +123,6 @@ public class ThirdPersonController : MonoBehaviour
             m_Animator.SetBool("Dying", m_Dying);
             m_Animator.SetBool("Die", m_Die);
             m_Die = false;
-
         }
 
         //StartUpdate functions
@@ -168,7 +172,12 @@ public class ThirdPersonController : MonoBehaviour
     private void FixedUpdate()
     {
         //State verifications
-        if (dyingFromFall || m_Dying || m_Revive)
+        if(dyingFromFall)
+        {
+            m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
+            return;
+        }
+        if (m_Dying || m_Revive)
             return;
 
         //FixedUpdate functions
@@ -259,9 +268,9 @@ public class ThirdPersonController : MonoBehaviour
 
     private void ProgressStepCycle(float speed)
     {
-        if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
+        if (speed > 0 && (m_Input.x != 0 || m_Input.y != 0))
         {
-            m_StepCycle += (m_CharacterController.velocity.magnitude + speed) * Time.fixedDeltaTime;
+            m_StepCycle += (speed) * Time.fixedDeltaTime;
         }
 
         if (!(m_StepCycle > m_NextStep))
@@ -281,14 +290,20 @@ public class ThirdPersonController : MonoBehaviour
         {
             return;
         }
-        // pick & play a random footstep sound from the array,
-        // excluding sound at index 0
-        int n = Random.Range(1, m_FootstepSounds.Length);
-        //m_AudioSource.clip = m_FootstepSounds[n];
-        // m_AudioSource.PlayOneShot(m_AudioSource.clip);
-        // move picked sound to index 0 so it's not picked next time
-        // m_FootstepSounds[n] = m_FootstepSounds[0];
-        // m_FootstepSounds[0] = m_AudioSource.clip;
+        if(leftStep)
+        {
+            m_AudioSource.clip = m_LeftFootstepSounds[stepIndex];
+            leftStep = false;
+        }
+        else
+        {
+            m_AudioSource.clip = m_RightFootstepSounds[stepIndex];
+            leftStep = true;
+            stepIndex++;
+            if (stepIndex == m_RightFootstepSounds.Length)
+                stepIndex = 0;
+        }
+        m_AudioSource.PlayOneShot(m_AudioSource.clip);
     }
 
 

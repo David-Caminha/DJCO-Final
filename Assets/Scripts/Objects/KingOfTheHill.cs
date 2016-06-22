@@ -83,11 +83,20 @@ public class KingOfTheHill : NetworkBehaviour
                     if (blueRocksOwned < numberRocks - 1)
                         DropRock(blueTotems[blueRocksOwned], blueTeamStones[blueRocksOwned].transform);
                     else
-                        DropRock(finalTotem, blueTeamStones[blueRocksOwned].transform);
+                    {
+                        DropRock(finalTotem, finalRock.transform, true);
+
+                    }
                     blueRocksOwned++;
                     if (blueRocksOwned == numberRocks)
                     {
                         //TEAM1 WIN GAME
+                        //GameObject[] team1Players = GameObject.FindGameObjectsWithTag("Team1");
+                        //GameObject[] team2Players = GameObject.FindGameObjectsWithTag("Team2");
+                        //foreach (GameObject player in team1Players)
+                        //    player.GetComponent<PlayerStats>().WinGame();
+                        //foreach (GameObject player in team2Players)
+                        //    player.GetComponent<PlayerStats>().LoseGame();
                     }
                     else
                     {
@@ -99,16 +108,16 @@ public class KingOfTheHill : NetworkBehaviour
         }
         else if (blueTeam < redTeam)
         {
-            if (capturePoints != captureTime)
+            if (capturePoints != -captureTime)
             {
                 capturePoints -= timePassed * (Mathf.Min(3, redTeam - blueTeam) - leader);
                 if (capturePoints <= -captureTime)
                 {
-                    capturePoints = captureTime;
+                    capturePoints = -captureTime;
                     if (redRocksOwned < numberRocks - 1)
                         DropRock(redTotems[redRocksOwned], redTeamStones[redRocksOwned].transform);
                     else
-                        DropRock(finalTotem, redTeamStones[redRocksOwned].transform);
+                        DropRock(finalTotem, finalRock.transform, false);
                     redRocksOwned++;
                     if (redRocksOwned == numberRocks)
                     {
@@ -181,8 +190,27 @@ public class KingOfTheHill : NetworkBehaviour
 
     void DropRock(GameObject totemPrefab, Transform baseRock)
     {
-        GameObject totem = (GameObject) Instantiate(totemPrefab, baseRock.position, baseRock.rotation);
+        GameObject totem = (GameObject)Instantiate(totemPrefab, baseRock.position, baseRock.rotation);
         totem.transform.position += new Vector3(0, 100);
+        totem.GetComponent<Totem>().rot = totem.transform.rotation;
+        NetworkServer.Spawn(totem);
+    }
+
+    void DropRock(GameObject totemPrefab, Transform baseRock, bool blueTeam)
+    {
+        GameObject totem = (GameObject)Instantiate(totemPrefab, baseRock.position, baseRock.rotation);
+        totem.transform.position += new Vector3(0, 100);
+        var script = totem.GetComponent<Totem>();
+        script.rot = totem.transform.rotation;
+        script.finalTotem = true;
+        if (blueTeam)
+        {
+            script.blueTotem = true;
+        }
+        else
+        {
+            script.blueTotem = false;
+        }
         NetworkServer.Spawn(totem);
     }
 
@@ -283,7 +311,7 @@ public class KingOfTheHill : NetworkBehaviour
     [ClientRpc]
     public void RpcChangeRockToNeutral(int stoneIndex)
     {
-        if (stoneIndex == numberRocks)
+        if (stoneIndex == numberRocks || -stoneIndex == numberRocks)
         {
             finalRock.GetComponent<MeshRenderer>().material = neutralMaterial;
         }
