@@ -96,10 +96,12 @@ public class ThirdPersonController : MonoBehaviour
     public bool m_Teleporting;
     public bool m_UnTeleport;
     public bool m_UnTeleporting;
+    private GameObject teleportTo;
 
     public GameObject teleportA;
     public GameObject teleportB;
-    Vector3 teleportNewPosition;
+    Vector3 teleportStartPosition;
+    Vector3 teleportEndPosition;
 
     private AudioSource m_AudioSource;
     AnimatorStateInfo animState;
@@ -108,6 +110,7 @@ public class ThirdPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        teleportTo = GameObject.FindGameObjectWithTag("TeleportDestination");
         leftStep = false;
         cameraOverview = GameObject.FindGameObjectWithTag("OverviewCamera").transform;
         stepIndex = 0;
@@ -133,7 +136,6 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         //States verification
         if (dyingFromFall)
         {
@@ -181,20 +183,25 @@ public class ThirdPersonController : MonoBehaviour
         }
         if (m_Teleporting)
         {
-
             m_CharacterController.enabled = false;
-            transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
+            transform.position = Vector3.Lerp(teleportStartPosition, teleportEndPosition, time * 2);
             time += Time.deltaTime;
             if (time >= 0.5)
             {
+                time = 0;
                 m_Teleporting = false;
-                m_CharacterController.enabled = true;
+                m_UnTeleporting = true;
+                teleportStartPosition = teleportTo.transform.position;
+                transform.position = teleportTo.transform.position;
+                var portalB = (GameObject) Instantiate(teleportB, transform.position + new Vector3(0, 26f, 0), Quaternion.identity);
+                Destroy(portalB, 1);
+                teleportEndPosition = transform.position + new Vector3(0, 26, 0);
             }
             return;
         }
         if (m_UnTeleporting)
         {
-            transform.position = Vector3.Lerp(transform.position, teleportNewPosition, time);
+            transform.position = Vector3.Lerp(teleportStartPosition, teleportEndPosition, time * 2);
             time += Time.deltaTime;
             if (time >= 0.5)
             {
@@ -203,6 +210,7 @@ public class ThirdPersonController : MonoBehaviour
             }
             return;
         }
+
         //StartUpdate functions
         animState = m_Animator.GetCurrentAnimatorStateInfo(0);
 
@@ -232,19 +240,12 @@ public class ThirdPersonController : MonoBehaviour
             m_Teleport = Input.GetKey(KeyCode.Alpha3);
             if (m_Teleport)
             {
-                Instantiate(teleportA, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(-90, 0, 0));
-                teleportNewPosition = transform.position + new Vector3(0, -26, 0);
+                time = 0;
+                var portalA = (GameObject)Instantiate(teleportA, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(-90, 0, 0));
+                Destroy(portalA, 1);
+                teleportStartPosition = transform.position;
+                teleportEndPosition = transform.position + new Vector3(0, -26, 0);
                 m_Teleporting = true;
-                return;
-            }
-            m_UnTeleport = Input.GetKey(KeyCode.Alpha5);
-            if (m_UnTeleport)
-            {
-                m_CharacterController.enabled = false;
-                Instantiate(teleportB, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity);
-                transform.position = transform.position + new Vector3(0, -26, 0);
-                teleportNewPosition = transform.position + new Vector3(0, 26, 0);
-                m_UnTeleporting = true;
                 return;
             }
         }

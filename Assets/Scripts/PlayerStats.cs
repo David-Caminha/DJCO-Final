@@ -143,7 +143,7 @@ public class PlayerStats : NetworkBehaviour
         renderers = GetComponentsInChildren<Renderer>();
 
         Armor = 10;
-        Health = 100;
+        Health = 500;
         Energy = 150;
         Damage = 50;
         AttackSpeed = 0.93f;
@@ -181,6 +181,7 @@ public class PlayerStats : NetworkBehaviour
             thirdPersonController.m_Revive = true;
             thirdPersonController.Invoke("PlayReviveSound", 0.7f);
             ToggleControls(true);
+            Health = 500;
             Invoke("StopReviving", 2.1f);
         }
     }
@@ -255,9 +256,9 @@ public class PlayerStats : NetworkBehaviour
 
         if (isLocalPlayer) // Remove controls and Move player to the spawn point
         {
-            //Transform spawn = NetworkManager.singleton.GetStartPosition();
-            transform.position = new Vector3();
-            transform.rotation = Quaternion.identity;
+            Transform spawn = NetworkManager.singleton.GetStartPosition();
+            transform.position = spawn.position;
+            transform.rotation = spawn.rotation;
             ToggleControls(false);
         }
 
