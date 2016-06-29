@@ -2,14 +2,24 @@
 using UnityEngine;
 using System.Collections;
 
-public class Dash : MonoBehaviour
+public class Dash : Skill
 {
     private Vector3 forward;
     private Vector3 position;
     private CharacterController m_CharacterController;
     private float dashTime;
-    private Boolean dashing;
+    private bool dashing;
     public GameObject trail;
+
+    public override void Activate()
+    {
+        GetComponent<ThirdPersonController>().enabled = false;
+        dashing = true;
+        trail.GetComponent<TrailRenderer>().enabled = true;
+        forward = transform.forward;
+        Invoke("finishDash", dashTime);
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -24,10 +34,8 @@ public class Dash : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Debug.Log("Dash");
             GetComponent<ThirdPersonController>().enabled = false;
             DoDash();
-
         }
     }
 
@@ -37,8 +45,8 @@ public class Dash : MonoBehaviour
         trail.GetComponent<TrailRenderer>().enabled = true;
         forward = transform.forward;
         Invoke("finishDash", dashTime);
-
     }
+
     private void FixedUpdate()
     {
         if (dashing)

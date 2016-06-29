@@ -17,17 +17,17 @@ namespace Prototype.NetworkLobby
         }
 
 
-        //void Update()
-        //{
-        //    if (!isInGame)
-        //        return;
+        void Update()
+        {
+            if (!isInGame)
+                return;
 
-        //    if (Input.GetKeyDown(KeyCode.Escape))
-        //    {
-        //        ToggleVisibility(!isDisplayed);
-        //    }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ToggleVisibility(!isDisplayed);
+            }
 
-        //}
+        }
 
         public void ToggleVisibility(bool visible)
         {

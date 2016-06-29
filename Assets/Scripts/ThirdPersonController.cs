@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(CharacterController))]
 public class ThirdPersonController : MonoBehaviour
 {
+    public Skill[] skills;
+
     [SerializeField]
     private Transform cameraRelative2Player;
     [SerializeField]
@@ -49,8 +51,6 @@ public class ThirdPersonController : MonoBehaviour
     [SerializeField]
     private AudioClip m_Swing3Sound; // the sound played when character attacks at state 3.
     [SerializeField]
-    private AudioClip m_FreezeSound; // the sound played when character uses freeze.
-    [SerializeField]
     private AudioClip m_ReviveSound; // the sound played when character uses freeze.
     [SerializeField]
     private AudioClip m_DeathSound; // the sound played when character uses freeze.
@@ -90,8 +90,6 @@ public class ThirdPersonController : MonoBehaviour
 
     public bool m_Freeze;
     public bool m_Frenzy;
-    public bool m_Growing;
-    public bool m_UnGrowing;
     public bool m_Teleport;
     public bool m_Teleporting;
     public bool m_UnTeleport;
@@ -136,6 +134,11 @@ public class ThirdPersonController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        UpdateUI();
+
+        if (m_PlayerStats.Frozen)
+            return;
+
         //States verification
         if (dyingFromFall)
         {
@@ -159,28 +162,6 @@ public class ThirdPersonController : MonoBehaviour
             m_Die = false;
         }
 
-        if (m_Growing)
-        {
-            var newScale = new Vector3(2, 2, 2);
-            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
-            time += Time.deltaTime;
-            if (time >= 1.9f)
-            {
-                Invoke("Ungrow", 5.0f);
-                m_Growing = false;
-                time = 0;
-            }
-            return;
-        }
-        if (m_UnGrowing)
-        {
-            var newScale = new Vector3(1f, 1f, 1f);
-            transform.localScale = Vector3.Lerp(transform.localScale, newScale, 0.08f * time);
-            time += Time.deltaTime;
-            if (time >= 1)
-                m_UnGrowing = false;
-            return;
-        }
         if (m_Teleporting)
         {
             m_CharacterController.enabled = false;
@@ -226,27 +207,20 @@ public class ThirdPersonController : MonoBehaviour
             if (!m_Attacking)
                 m_Attack = CrossPlatformInputManager.GetButton("Fire1");
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-            m_Frenzy = Input.GetKey(KeyCode.Alpha1);
+            m_Frenzy = Input.GetKeyDown(KeyCode.Alpha1);
             if (m_Frenzy)
             {
-                m_Growing = true;
-                time = 0;
+                skills[0].Activate();
             }
-            m_Freeze = Input.GetKey(KeyCode.Alpha2);
+            m_Freeze = Input.GetKeyDown(KeyCode.Alpha2);
             if (m_Freeze)
             {
-                Invoke("PlayFreezeSound", 0.5f);
+                skills[1].Activate();
             }
-            m_Teleport = Input.GetKey(KeyCode.Alpha3);
+            m_Teleport = Input.GetKeyDown(KeyCode.Alpha3);
             if (m_Teleport)
             {
-                time = 0;
-                var portalA = (GameObject)Instantiate(teleportA, transform.position + new Vector3(0, 0.5f, 0), Quaternion.Euler(-90, 0, 0));
-                Destroy(portalA, 1);
-                teleportStartPosition = transform.position;
-                teleportEndPosition = transform.position + new Vector3(0, -26, 0);
-                m_Teleporting = true;
-                return;
+                skills[2].Activate();
             }
         }
         if (m_Attacking)
@@ -268,6 +242,20 @@ public class ThirdPersonController : MonoBehaviour
         m_PreviouslyGrounded = grounded;
     }
 
+    private void UpdateUI()
+    {
+        var healthPercent = (float)m_PlayerStats.Health / m_PlayerStats.MaxHealth;
+        var manaPercent = (float)m_PlayerStats.Mana / m_PlayerStats.MaxMana;
+
+        healthPercent = Mathf.Clamp(healthPercent, 0, 1);
+        manaPercent = Mathf.Clamp(manaPercent, 0, 1);
+
+        m_PlayerStats.healthBar.transform.localScale = new Vector3(healthPercent, 1, 1);
+        m_PlayerStats.manaBar.transform.localScale = new Vector3(manaPercent, 1, 1);
+
+        m_PlayerStats.healthText.text = m_PlayerStats.Health + " / " + m_PlayerStats.MaxHealth;
+        m_PlayerStats.manaText.text = m_PlayerStats.Mana + " / " + m_PlayerStats.MaxMana;
+    }
 
     private void PlayLandingSound()
     {
@@ -299,12 +287,6 @@ public class ThirdPersonController : MonoBehaviour
         m_AudioSource.Play();
     }
 
-    private void PlayFreezeSound()
-    {
-        m_AudioSource.clip = m_FreezeSound;
-        m_AudioSource.Play();
-    }
-
     private void PlayReviveSound()
     {
         m_AudioSource.clip = m_ReviveSound;
@@ -323,7 +305,6 @@ public class ThirdPersonController : MonoBehaviour
         m_AudioSource.Play();
     }
 
-
     private void FixedUpdate()
     {
         //State verifications
@@ -332,11 +313,11 @@ public class ThirdPersonController : MonoBehaviour
             m_CharacterController.Move(m_MoveDir * Time.fixedDeltaTime);
             return;
         }
-        if (m_Dying || m_Revive)
+        if (m_Dying || m_Revive || m_PlayerStats.Frozen)
             return;
 
         //FixedUpdate functions
-        grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround);
+        grounded = Physics.CheckSphere(groundCheck.position, groundRadius, whatIsGround, QueryTriggerInteraction.Ignore);
 
         float speed;
         GetInput(out speed);
@@ -429,7 +410,6 @@ public class ThirdPersonController : MonoBehaviour
         m_AudioSource.Play();
     }
 
-
     private void ProgressStepCycle(float speed)
     {
         if (speed > 0 && (m_Input.x != 0 || m_Input.y != 0))
@@ -446,7 +426,6 @@ public class ThirdPersonController : MonoBehaviour
 
         PlayFootStepAudio();
     }
-
 
     private void PlayFootStepAudio()
     {
@@ -469,7 +448,6 @@ public class ThirdPersonController : MonoBehaviour
         }
         m_AudioSource.PlayOneShot(m_AudioSource.clip);
     }
-
 
     private void GetInput(out float speed)
     {
@@ -505,7 +483,6 @@ public class ThirdPersonController : MonoBehaviour
         }
     }
 
-
     private void RotateView()
     {
         m_MouseLook.LookRotation(transform, m_Camera.transform);
@@ -513,7 +490,6 @@ public class ThirdPersonController : MonoBehaviour
 
     void UpdateAnimator()
     {
-
         // update the animator parameters
         m_Animator.SetFloat("Forward", m_Input.y, 0.1f, Time.deltaTime);
         m_Animator.SetFloat("Strafe", m_Input.x, 0.1f, Time.deltaTime);
@@ -555,7 +531,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Camera.transform.position = cameraOverview.position;
         m_Camera.transform.rotation = cameraOverview.rotation;
         dyingFromFall = false;
-        m_PlayerStats.CmdPlayerDeath();
+        m_PlayerStats.CmdPlayerDeath(gameObject);
     }
 
     public void ResetCamera()
@@ -565,12 +541,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Camera.transform.rotation = cameraRelative2Player.rotation;
         m_MouseLook.Init(transform, m_Camera.transform);
     }
-
-    public void Ungrow()
-    {
-        m_UnGrowing = true;
-    }
-
+    
     // Used to add force upon collision between character controller and a rigidbody
     //private void OnControllerColliderHit(ControllerColliderHit hit)
     //{

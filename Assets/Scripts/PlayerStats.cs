@@ -1,13 +1,34 @@
-﻿using System;
+﻿using Prototype.NetworkLobby;
+using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PlayerStats : NetworkBehaviour
 {
     //ERRORS ir buscar damage
 
-    public GameObject victoryScreen;
-    public GameObject defeatScreen;
+    public GameObject netManager;
+    public SkinnedMeshRenderer mesh;
+    public Material[] blueTeam;
+    public Material[] redTeam;
+
+    private GameObject victoryScreen;
+    private GameObject defeatScreen;
+    [HideInInspector]
+    public GameObject healthBar;
+    [HideInInspector]
+    public GameObject manaBar;
+    [HideInInspector]
+    public Text healthText;
+    [HideInInspector]
+    public Text manaText;
+
+    public RectTransform floatingHealthBar;
+    public RectTransform floatingManaBar;
+
+    [SyncVar(hook = "OnTeamChange")]
+    public string team;
 
     // Basic stats for the character
     [SerializeField]
@@ -18,7 +39,13 @@ public class PlayerStats : NetworkBehaviour
     private int _health;
     [SerializeField]
     [HideInInspector]
-    private int _energy;
+    private int _maxHealth;
+    [SerializeField]
+    [HideInInspector]
+    private int _mana;
+    [SerializeField]
+    [HideInInspector]
+    private int _maxMana;
     [SerializeField]
     [HideInInspector]
     private int _damage;
@@ -30,8 +57,10 @@ public class PlayerStats : NetworkBehaviour
     private float _attackSpeed;
 
     // Status effects
-    [SerializeField] private bool _frozen;
-    [SerializeField] private bool _leader;
+    [SerializeField]
+    private bool _frozen;
+    [SerializeField]
+    private bool _leader;
 
 
     public ThirdPersonController thirdPersonController;
@@ -64,15 +93,39 @@ public class PlayerStats : NetworkBehaviour
         }
     }
 
-    public int Energy
+    public int MaxHealth
     {
         get
         {
-            return _energy;
+            return _maxHealth;
         }
         private set
         {
-            _energy = value;
+            _maxHealth = value;
+        }
+    }
+
+    public int Mana
+    {
+        get
+        {
+            return _mana;
+        }
+        private set
+        {
+            _mana = value;
+        }
+    }
+
+    public int MaxMana
+    {
+        get
+        {
+            return _maxMana;
+        }
+        private set
+        {
+            _maxMana = value;
         }
     }
 
@@ -144,16 +197,40 @@ public class PlayerStats : NetworkBehaviour
 
         Armor = 10;
         Health = 500;
-        Energy = 150;
+        Mana = 150;
+        MaxHealth = 500;
+        MaxMana = 150;
         Damage = 50;
         AttackSpeed = 0.93f;
         MovementSpeed = 100;
 
         Frozen = false;
+        Leader = false;
 
-        if(isLocalPlayer)
+        tag = team;
+        
+        if (team.Equals("Team1"))
         {
+            mesh.materials = blueTeam;
+        }
+        else if (team.Equals("Team2"))
+        {
+            mesh.materials = redTeam;
+        }
+
+        if (isLocalPlayer)
+        {
+            floatingHealthBar.parent.gameObject.SetActive(false);
+
             Invoke("StopReviving", 2.4f);
+            victoryScreen = GameObject.FindGameObjectWithTag("VictoryScreen");
+            defeatScreen = GameObject.FindGameObjectWithTag("DefeatScreen");
+            healthBar = GameObject.FindGameObjectWithTag("HealthBar");
+            manaBar = GameObject.FindGameObjectWithTag("ManaBar");
+            healthText = GameObject.FindGameObjectWithTag("HealthText").GetComponent<Text>();
+            manaText = GameObject.FindGameObjectWithTag("ManaText").GetComponent<Text>();
+            victoryScreen.SetActive(false);
+            defeatScreen.SetActive(false);
         }
     }
 
@@ -166,7 +243,6 @@ public class PlayerStats : NetworkBehaviour
     void ToggleControls(bool isAlive)
     {
         thirdPersonController.enabled = isAlive;
-        
     }
 
     // Methods to be invoked by other functions
@@ -185,9 +261,27 @@ public class PlayerStats : NetworkBehaviour
             Invoke("StopReviving", 2.1f);
         }
     }
+
     void StopReviving()
     {
         thirdPersonController.m_Revive = false;
+    }
+
+    void RemoveFrenzy()
+    {
+        MaxHealth = 500;
+        if (Health > 500)
+            Health = 500;
+        Damage = 50;
+
+        var healthPercent = (float)Health / MaxHealth;
+        var manaPercent = (float)Mana / MaxMana;
+
+        healthPercent = Mathf.Clamp(healthPercent, 0, 1);
+        manaPercent = Mathf.Clamp(manaPercent, 0, 1);
+
+        floatingHealthBar.localScale = new Vector3(healthPercent, 1, 1);
+        floatingManaBar.localScale = new Vector3(manaPercent, 1, 1);
     }
 
     void RemoveFreeze()
@@ -205,11 +299,30 @@ public class PlayerStats : NetworkBehaviour
     public void ChangeHealth(int amount)
     {
         Health += amount;
+
+        var healthPercent = (float)Health / MaxHealth;
+        var manaPercent = (float)Mana / MaxMana;
+
+        healthPercent = Mathf.Clamp(healthPercent, 0, 1);
+        manaPercent = Mathf.Clamp(manaPercent, 0, 1);
+
+        floatingHealthBar.localScale = new Vector3(healthPercent, 1, 1);
+        floatingManaBar.localScale = new Vector3(manaPercent, 1, 1);
     }
 
-    public void ChangeEnergy(int amount)
+    public void ChangeMana(int amount)
     {
-        Energy += amount;
+        Mana += amount;
+    }
+
+    public void ChangeMaxHealth(int newValue)
+    {
+        MaxHealth = newValue;
+    }
+
+    public void ChangeMaxMana(int newValue)
+    {
+        MaxMana = newValue;
     }
 
     public void ChangeDamage(int amount)
@@ -237,16 +350,26 @@ public class PlayerStats : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcResolveHit(int amount) // Remove hp check death etc...
+    public void RpcResolveHit(int amount)
     {
-        ChangeHealth(amount); //ERROR Ir buscar damage e aplicar
+        ChangeHealth(amount);
+        if (isLocalPlayer && Health <= 0)
+        {
+            Invoke("Die", 2.58f);
+            thirdPersonController.m_Die = true;
+            thirdPersonController.PlayDeathSound();
+        }
+    }
 
+    void Die()
+    {
+        CmdPlayerDeath(gameObject);
     }
 
     [Command]
-    public void CmdPlayerDeath()
+    public void CmdPlayerDeath(GameObject deadPlayer)
     {
-        RpcPlayerDeath();
+        deadPlayer.GetComponent<PlayerStats>().RpcPlayerDeath();
     }
 
     [ClientRpc]
@@ -261,8 +384,33 @@ public class PlayerStats : NetworkBehaviour
             transform.rotation = spawn.rotation;
             ToggleControls(false);
         }
-
         Invoke("Respawn", 0.1f);
+    }
+
+    //Command and Rpc calls for spells
+    [Command]
+    public void CmdActivateFrenzy(float duration)
+    {
+        RpcActivateFrenzy(duration);
+    }
+
+    [ClientRpc]
+    void RpcActivateFrenzy(float duration)
+    {
+        MaxHealth = 1500;
+        Health = 1500;
+        Damage = 100;
+
+        var healthPercent = (float)Health / MaxHealth;
+        var manaPercent = (float)Mana / MaxMana;
+
+        healthPercent = Mathf.Clamp(healthPercent, 0, 1);
+        manaPercent = Mathf.Clamp(manaPercent, 0, 1);
+
+        floatingHealthBar.localScale = new Vector3(healthPercent, 1, 1);
+        floatingManaBar.localScale = new Vector3(manaPercent, 1, 1);
+
+        Invoke("RemoveFrenzy", 1.7f + duration);
     }
 
     [ClientRpc]
@@ -280,19 +428,11 @@ public class PlayerStats : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            if (other.tag.Equals("Sword"))
+            if (other.CompareTag("Sword") && !other.transform.root.CompareTag(tag))
             {
                 if (!thirdPersonController.m_Dying)
                 {
                     CmdResolveHit(-other.transform.root.GetComponent<PlayerStats>().Damage);
-
-                    Debug.Log("My health" + Health);
-                    if (Health <= 0)
-                    {
-                        Invoke("CmdPlayerDeath", 2.58f);
-                        thirdPersonController.m_Die = true;
-                        thirdPersonController.PlayDeathSound(); //EM PRINCIPIO ESTA BEM SENAO FAZ UM INVOKE :)
-                    }
                 }
             }
             else
@@ -304,11 +444,39 @@ public class PlayerStats : NetworkBehaviour
 
     public void WinGame()
     {
-        victoryScreen.SetActive(true);
+        if (isLocalPlayer)
+        {
+            print("WON");
+            victoryScreen.SetActive(true);
+            Invoke("Disconnect", 3f);
+        }
     }
 
     public void LoseGame()
     {
-        defeatScreen.SetActive(true);
+        if (isLocalPlayer)
+        {
+            print("LOST");
+            defeatScreen.SetActive(true);
+            Invoke("Disconnect", 3f);
+        }
+    }
+
+    void Disconnect()
+    {
+        if (isServer)
+        {
+            netManager.GetComponent<LobbyManager>().StopHostClbk();
+        }
+        else
+        {
+            netManager.GetComponent<LobbyManager>().StopClientClbk();
+        }
+    }
+
+    //SyncVar hooks
+    private void OnTeamChange(string newTeam)
+    {
+        tag = newTeam;
     }
 }

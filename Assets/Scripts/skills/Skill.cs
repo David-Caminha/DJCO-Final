@@ -6,7 +6,7 @@ public abstract class Skill : NetworkBehaviour
 {
     public abstract void Activate();
 
-    public List<GameObject> AreaOfEffect(Vector2 center, float radius)
+    public List<GameObject> AreaOfEffect(Vector3 center, float radius)
     {
         string[] layers = { LayerMask.LayerToName(gameObject.layer) };
         LayerMask layerMask = LayerMask.GetMask(layers);
@@ -23,7 +23,7 @@ public abstract class Skill : NetworkBehaviour
         return enemiesHit;
     }
 
-    public List<GameObject> ConeAreaOfEffect(Vector2 center, float radius, float angle)
+    public List<GameObject> ConeAreaOfEffect(Vector3 center, float radius, float angle)
     {
         string[] layers = { LayerMask.LayerToName(gameObject.layer) };
         LayerMask layerMask = LayerMask.GetMask(layers);

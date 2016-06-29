@@ -5,6 +5,9 @@ using System;
 
 public class KingOfTheHill : NetworkBehaviour
 {
+    public GameObject[] blueHeadsUI;
+    public GameObject[] redHeadsUI;
+
     public Material neutralMaterial;
     public Material blueMaterial;
     public Material redMaterial;
@@ -59,12 +62,10 @@ public class KingOfTheHill : NetworkBehaviour
         if (capturePointsRatio < 0)
         {
             rockState = Mathf.CeilToInt(capturePointsRatio);
-            print("RED rockState: " + rockState);
         }
         else
         {
             rockState = Mathf.FloorToInt(capturePointsRatio);
-            print("BLUE rockState: " + rockState);
         }
         //Debug.Log("rockState: " + rockState);
         setRockColors(rockState);
@@ -83,20 +84,18 @@ public class KingOfTheHill : NetworkBehaviour
                     if (blueRocksOwned < numberRocks - 1)
                         DropRock(blueTotems[blueRocksOwned], blueTeamStones[blueRocksOwned].transform);
                     else
-                    {
                         DropRock(finalTotem, finalRock.transform, true);
-
-                    }
+                    RpcActivateBlueRock(blueRocksOwned);
                     blueRocksOwned++;
                     if (blueRocksOwned == numberRocks)
                     {
                         //TEAM1 WIN GAME
-                        //GameObject[] team1Players = GameObject.FindGameObjectsWithTag("Team1");
-                        //GameObject[] team2Players = GameObject.FindGameObjectsWithTag("Team2");
-                        //foreach (GameObject player in team1Players)
-                        //    player.GetComponent<PlayerStats>().WinGame();
-                        //foreach (GameObject player in team2Players)
-                        //    player.GetComponent<PlayerStats>().LoseGame();
+                        GameObject[] team1Players = GameObject.FindGameObjectsWithTag("Team1");
+                        GameObject[] team2Players = GameObject.FindGameObjectsWithTag("Team2");
+                        foreach (GameObject player in team1Players)
+                            RpcWinGame(player);
+                        foreach (GameObject player in team2Players)
+                            RpcLoseGame(player);
                     }
                     else
                     {
@@ -118,10 +117,17 @@ public class KingOfTheHill : NetworkBehaviour
                         DropRock(redTotems[redRocksOwned], redTeamStones[redRocksOwned].transform);
                     else
                         DropRock(finalTotem, finalRock.transform, false);
+                    RpcActivateRedRock(redRocksOwned);
                     redRocksOwned++;
                     if (redRocksOwned == numberRocks)
                     {
                         //TEAM2 WIN GAME
+                        GameObject[] team1Players = GameObject.FindGameObjectsWithTag("Team1");
+                        GameObject[] team2Players = GameObject.FindGameObjectsWithTag("Team2");
+                        foreach (GameObject player in team1Players)
+                            RpcLoseGame(player);
+                        foreach (GameObject player in team2Players)
+                            RpcWinGame(player);
                     }
                     else
                     {
@@ -251,7 +257,7 @@ public class KingOfTheHill : NetworkBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<PlayerStats>().Leader)
+        if (other.tag.StartsWith("Team") && other.GetComponent<PlayerStats>().Leader)
         {
             if (other.CompareTag("Team1"))
             {
@@ -330,5 +336,29 @@ public class KingOfTheHill : NetworkBehaviour
             blueTeamStones[0].GetComponent<MeshRenderer>().material = neutralMaterial;
             redTeamStones[0].GetComponent<MeshRenderer>().material = neutralMaterial;
         }
+    }
+
+    [ClientRpc]
+    public void RpcWinGame(GameObject player)
+    {
+        player.GetComponent<PlayerStats>().Invoke("WinGame", 3f);
+    }
+
+    [ClientRpc]
+    public void RpcLoseGame(GameObject player)
+    {
+        player.GetComponent<PlayerStats>().Invoke("LoseGame", 3f);
+    }
+
+    [ClientRpc]
+    public void RpcActivateBlueRock(int index)
+    {
+        blueHeadsUI[index].SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcActivateRedRock(int index)
+    {
+        redHeadsUI[index].SetActive(true);
     }
 }
