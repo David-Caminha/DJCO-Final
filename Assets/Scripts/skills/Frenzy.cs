@@ -26,7 +26,7 @@ public class Frenzy : Skill {
         frenzyDuration = 10f;
         growing = false;
         unGrowing = false;
-        normalScale = new Vector3(1, 1, 1);
+        normalScale = new Vector3(0.7f, 0.7f, 0.7f);
         bigScale = new Vector3(2, 2, 2);
     }
 	

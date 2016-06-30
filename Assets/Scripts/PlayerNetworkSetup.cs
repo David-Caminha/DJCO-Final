@@ -11,10 +11,9 @@ public class PlayerNetworkSetup : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        thirdPersonController.enabled = true;
+        GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().localPlayer = thirdPersonController;
         fpsCamera.gameObject.SetActive(true);
         audioListener.enabled = true;
-        GetComponent<Freeze>().enabled = true;
         for (int i = 0; i < 13; i++)
             GetComponent<NetworkAnimator>().SetParameterAutoSend(i, true);
 

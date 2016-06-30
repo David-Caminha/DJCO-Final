@@ -202,7 +202,7 @@ public class PlayerStats : NetworkBehaviour
         MaxMana = 150;
         Damage = 50;
         AttackSpeed = 0.93f;
-        MovementSpeed = 100;
+        MovementSpeed = 75;
 
         Frozen = false;
         Leader = false;
@@ -222,13 +222,13 @@ public class PlayerStats : NetworkBehaviour
         {
             floatingHealthBar.parent.gameObject.SetActive(false);
 
-            Invoke("StopReviving", 2.4f);
             victoryScreen = GameObject.FindGameObjectWithTag("VictoryScreen");
             defeatScreen = GameObject.FindGameObjectWithTag("DefeatScreen");
             healthBar = GameObject.FindGameObjectWithTag("HealthBar");
             manaBar = GameObject.FindGameObjectWithTag("ManaBar");
             healthText = GameObject.FindGameObjectWithTag("HealthText").GetComponent<Text>();
             manaText = GameObject.FindGameObjectWithTag("ManaText").GetComponent<Text>();
+            healthBar.transform.parent.gameObject.SetActive(false);
             victoryScreen.SetActive(false);
             defeatScreen.SetActive(false);
         }
@@ -464,6 +464,7 @@ public class PlayerStats : NetworkBehaviour
 
     void Disconnect()
     {
+        thirdPersonController.m_MouseLook.SetCursorLock(false);
         if (isServer)
         {
             netManager.GetComponent<LobbyManager>().StopHostClbk();

@@ -1,23 +1,31 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class Dash : Skill
 {
+    public AudioSource skillSoundSource;
+    public AudioClip dashSound;
+
+    public TrailRenderer trail;
+    public Material blueMaterial;
+    public Material redMaterial;
+
     private Vector3 forward;
     private Vector3 position;
     private CharacterController m_CharacterController;
     private float dashTime;
     private bool dashing;
-    public GameObject trail;
 
     public override void Activate()
     {
         GetComponent<ThirdPersonController>().enabled = false;
         dashing = true;
-        trail.GetComponent<TrailRenderer>().enabled = true;
+        trail.enabled = true;
         forward = transform.forward;
-        Invoke("finishDash", dashTime);
+        CmdPlayDashSound();
+        CmdDash();
     }
 
     // Use this for initialization
@@ -26,25 +34,11 @@ public class Dash : Skill
         m_CharacterController = GetComponent<CharacterController>();
         dashTime = 0.2f;
         dashing = false;
-        trail.GetComponent<TrailRenderer>().enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            GetComponent<ThirdPersonController>().enabled = false;
-            DoDash();
-        }
-    }
-
-    void DoDash()
-    {
-        dashing = true;
-        trail.GetComponent<TrailRenderer>().enabled = true;
-        forward = transform.forward;
-        Invoke("finishDash", dashTime);
+        if (CompareTag("Team1"))
+            trail.material = blueMaterial;
+        else if (CompareTag("Team2"))
+            trail.material = redMaterial;
+        trail.enabled = false;
     }
 
     private void FixedUpdate()
@@ -55,8 +49,43 @@ public class Dash : Skill
 
     void finishDash()
     {
-        dashing = false;
-        GetComponent<ThirdPersonController>().enabled = true;
-        trail.GetComponent<TrailRenderer>().enabled = false;
+        if (isLocalPlayer)
+        {
+            dashing = false;
+            GetComponent<ThirdPersonController>().enabled = true;
+        }
+        trail.enabled = false;
+    }
+
+    [Command]
+    void CmdPlayDashSound()
+    {
+        RpcPlayDashSound();
+    }
+
+    [ClientRpc]
+    private void RpcPlayDashSound()
+    {
+        skillSoundSource.clip = dashSound;
+        skillSoundSource.Play();
+    }
+
+    [Command]
+    void CmdDash()
+    {
+        RpcDash();
+    }
+
+    [ClientRpc]
+    void RpcDash()
+    {
+        if(isLocalPlayer)
+        {
+            forward = transform.forward;
+            GetComponent<ThirdPersonController>().enabled = false;
+            dashing = true;
+        }
+        trail.enabled = true;
+        Invoke("finishDash", dashTime);
     }
 }

@@ -19,7 +19,7 @@ public class ThirdPersonController : MonoBehaviour
     [HideInInspector]
     private PlayerStats m_PlayerStats;
     [SerializeField]
-    private ThirdPersonMouseLook m_MouseLook;
+    public ThirdPersonMouseLook m_MouseLook;
     [SerializeField]
     private float m_ForwardSpeed;   // Speed modifier when walking forwards
     [SerializeField]
@@ -108,6 +108,7 @@ public class ThirdPersonController : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>().localPlayer = this;
         teleportTo = GameObject.FindGameObjectWithTag("TeleportDestination");
         leftStep = false;
         cameraOverview = GameObject.FindGameObjectWithTag("OverviewCamera").transform;
@@ -128,6 +129,7 @@ public class ThirdPersonController : MonoBehaviour
         m_Die = false;
         m_Revive = true;
         Invoke("PlayReviveSound", 0.7f);
+        m_PlayerStats.Invoke("StopReviving", 2.4f);
     }
 
 
@@ -210,17 +212,27 @@ public class ThirdPersonController : MonoBehaviour
             m_Frenzy = Input.GetKeyDown(KeyCode.Alpha1);
             if (m_Frenzy)
             {
-                skills[0].Activate();
+                if (skills[0].enabled)
+                    skills[0].Activate();
+                else
+                    m_Frenzy = false;
             }
             m_Freeze = Input.GetKeyDown(KeyCode.Alpha2);
-            if (m_Freeze)
+            if (m_Freeze && skills[1].enabled)
             {
-                skills[1].Activate();
+                if (skills[1].enabled)
+                    skills[1].Activate();
+                else
+                    m_Freeze = false;
             }
             m_Teleport = Input.GetKeyDown(KeyCode.Alpha3);
-            if (m_Teleport)
+            if (m_Teleport && skills[2].enabled)
             {
                 skills[2].Activate();
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha4) && skills[3].enabled)
+            {
+                skills[3].Activate();
             }
         }
         if (m_Attacking)
@@ -367,7 +379,6 @@ public class ThirdPersonController : MonoBehaviour
 
     private void Attack()
     {
-
         m_Attacking = true;
         switch (m_attackState)
         {
