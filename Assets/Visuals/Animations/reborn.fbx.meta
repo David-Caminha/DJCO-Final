@@ -1,0 +1,357 @@
+fileFormatVersion: 2
+guid: 5c2b573a7949141429f6b96d22ef96e9
+timeCreated: 1466445287
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Arm_Down.L
+    100002: Arm_Down.R
+    100004: Arm_Up.L
+    100006: Arm_Up.R
+    100008: Armature
+    100010: Armature.L
+    100012: Armature.L_end
+    100014: Armature.R
+    100016: Armature.R_end
+    100018: Back
+    100020: Butt
+    100022: Camera
+    100024: Fingers_Down.L
+    100026: Fingers_Down.L_end
+    100028: Fingers_Down.R
+    100030: Fingers_Down.R_end
+    100032: Fingers_Up.L
+    100034: Fingers_Up.R
+    100036: Foot.L
+    100038: Foot.R
+    100040: Foot_Roll.L
+    100042: Foot_Roll.R
+    100044: Hand.L
+    100046: Hand.R
+    100048: Head
+    100050: Joana
+    100052: Leg_Control.L
+    100054: Leg_Control.R
+    100056: Leg_Down.L
+    100058: Leg_Down.L_end
+    100060: Leg_Down.R
+    100062: Leg_Down.R_end
+    100064: Leg_IK.L
+    100066: Leg_IK.L_end
+    100068: Leg_IK.R
+    100070: Leg_IK.R_end
+    100072: Leg_Poletarget.L
+    100074: Leg_Poletarget.L_end
+    100076: Leg_Poletarget.R
+    100078: Leg_Poletarget.R_end
+    100080: Leg_Up.L
+    100082: Leg_Up.R
+    100084: Mask
+    100086: Mask_end
+    100088: Neck
+    100090: //RootNode
+    100092: Root
+    100094: Sword
+    100096: Sword_end
+    100098: Thumb_Down.L
+    100100: Thumb_Down.L_end
+    100102: Thumb_Down.R
+    100104: Thumb_Down.R_end
+    100106: Thumb_Up.L
+    100108: Thumb_Up.R
+    100110: Toes.L
+    100112: Toes.L_end
+    100114: Toes.R
+    100116: Toes.R_end
+    100118: Toes_Control.L
+    100120: Toes_Control.L_end
+    100122: Toes_Control.R
+    100124: Toes_Control.R_end
+    400000: Arm_Down.L
+    400002: Arm_Down.R
+    400004: Arm_Up.L
+    400006: Arm_Up.R
+    400008: Armature
+    400010: Armature.L
+    400012: Armature.L_end
+    400014: Armature.R
+    400016: Armature.R_end
+    400018: Back
+    400020: Butt
+    400022: Camera
+    400024: Fingers_Down.L
+    400026: Fingers_Down.L_end
+    400028: Fingers_Down.R
+    400030: Fingers_Down.R_end
+    400032: Fingers_Up.L
+    400034: Fingers_Up.R
+    400036: Foot.L
+    400038: Foot.R
+    400040: Foot_Roll.L
+    400042: Foot_Roll.R
+    400044: Hand.L
+    400046: Hand.R
+    400048: Head
+    400050: Joana
+    400052: Leg_Control.L
+    400054: Leg_Control.R
+    400056: Leg_Down.L
+    400058: Leg_Down.L_end
+    400060: Leg_Down.R
+    400062: Leg_Down.R_end
+    400064: Leg_IK.L
+    400066: Leg_IK.L_end
+    400068: Leg_IK.R
+    400070: Leg_IK.R_end
+    400072: Leg_Poletarget.L
+    400074: Leg_Poletarget.L_end
+    400076: Leg_Poletarget.R
+    400078: Leg_Poletarget.R_end
+    400080: Leg_Up.L
+    400082: Leg_Up.R
+    400084: Mask
+    400086: Mask_end
+    400088: Neck
+    400090: //RootNode
+    400092: Root
+    400094: Sword
+    400096: Sword_end
+    400098: Thumb_Down.L
+    400100: Thumb_Down.L_end
+    400102: Thumb_Down.R
+    400104: Thumb_Down.R_end
+    400106: Thumb_Up.L
+    400108: Thumb_Up.R
+    400110: Toes.L
+    400112: Toes.L_end
+    400114: Toes.R
+    400116: Toes.R_end
+    400118: Toes_Control.L
+    400120: Toes_Control.L_end
+    400122: Toes_Control.R
+    400124: Toes_Control.R_end
+    4300000: Joana
+    7400000: Revive
+    7400002: Armature|Run
+    7400004: Joana|Run
+    9500000: //RootNode
+    13700000: Joana
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Revive
+      takeName: Armature|ArmatureAction
+      firstFrame: 0
+      lastFrame: 51
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/Root
+        weight: 1
+      - path: Armature/Root/Butt
+        weight: 1
+      - path: Armature/Root/Butt/Back
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Fingers_Up.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Fingers_Up.L/Fingers_Down.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Fingers_Up.L/Fingers_Down.L/Fingers_Down.L_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Thumb_Up.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Thumb_Up.L/Thumb_Down.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.L/Arm_Down.L/Hand.L/Thumb_Up.L/Thumb_Down.L/Thumb_Down.L_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Fingers_Up.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Fingers_Up.R/Fingers_Down.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Fingers_Up.R/Fingers_Down.R/Fingers_Down.R_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Sword
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Sword/Sword_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Thumb_Up.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Thumb_Up.R/Thumb_Down.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Arm_Up.R/Arm_Down.R/Hand.R/Thumb_Up.R/Thumb_Down.R/Thumb_Down.R_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Armature.L
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Armature.L/Armature.L_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Armature.R
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Armature.R/Armature.R_end
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Head
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Head/Mask
+        weight: 1
+      - path: Armature/Root/Butt/Back/Neck/Head/Mask/Mask_end
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.L
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.L/Leg_Down.L
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.L/Leg_Down.L/Leg_Down.L_end
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.R
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.R/Leg_Down.R
+        weight: 1
+      - path: Armature/Root/Butt/Leg_Up.R/Leg_Down.R/Leg_Down.R_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot.L/Toes.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot.L/Toes.L/Toes.L_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot_Roll.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot_Roll.L/Leg_IK.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Foot_Roll.L/Leg_IK.L/Leg_IK.L_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Toes_Control.L
+        weight: 1
+      - path: Armature/Root/Leg_Control.L/Toes_Control.L/Toes_Control.L_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot.R/Toes.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot.R/Toes.R/Toes.R_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot_Roll.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot_Roll.R/Leg_IK.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Foot_Roll.R/Leg_IK.R/Leg_IK.R_end
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Toes_Control.R
+        weight: 1
+      - path: Armature/Root/Leg_Control.R/Toes_Control.R/Toes_Control.R_end
+        weight: 1
+      - path: Armature/Root/Leg_Poletarget.L
+        weight: 1
+      - path: Armature/Root/Leg_Poletarget.L/Leg_Poletarget.L_end
+        weight: 1
+      - path: Armature/Root/Leg_Poletarget.R
+        weight: 1
+      - path: Armature/Root/Leg_Poletarget.R/Leg_Poletarget.R_end
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Joana
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
